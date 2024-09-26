@@ -19,3 +19,15 @@ class BaseModel:
         """Print the instance"""
         return "[{}] ({}) {}".format(
           self.__class__.__name__, self.id, self.__dict__)
+
+    def save(self):
+        """Save the instance"""
+        self.updated_at = self.id
+
+    def to_dict(self):
+        """Return a dictionary containing the instance"""
+      dict = {}
+      for key, value in self.__dict__.items():
+        if key != "id" and key != "created_at" and key != "updated_at":
+          dict[key] = value
+      return dict
