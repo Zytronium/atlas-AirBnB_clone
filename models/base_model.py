@@ -3,7 +3,7 @@
 import uuid
 import models
 from datetime import datetime
-from models import storage
+from models.engine.file_storage import filestorage as storage
 
 class BaseModel:
     """Base atributes for each instance"""
@@ -32,7 +32,7 @@ class BaseModel:
     def save(self):
         """Save the instance"""
         self.updated_at = datetime.now()
-        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         """Return a dictionary containing the instance"""
