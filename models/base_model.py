@@ -12,15 +12,17 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialize the instance"""
 
-        time_format = '%Y-%m-%dT%H:%M:%S.%f'
+        format = '%Y-%m-%dT%H:%M:%S.%f'
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.now().strftime(time_format)
-        self.updated_at = datetime.now().strftime(time_format)
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
         if kwargs:
-            for attr_name, attr_value in kwargs.items():
-                if attr_name == 'created_at' or attr_name == 'updated_at':
-                    continue
-                setattr(self, attr_name, attr_value)
+            for name, value in kwargs.items():
+                if name == 'created_at' or name == 'updated_at':
+                    self.__dict__[value] = datetime.strptime(value, format)
+                else:
+                    self.__dict__[name] = value
+            
 
     def __str__(self):
         """Print the instance"""
