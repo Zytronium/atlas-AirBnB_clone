@@ -6,6 +6,7 @@ from datetime import datetime
 from .engine import file_storage
 
 
+
 class BaseModel:
     """Base atributes for each instance"""
     def __init__(self, *args, **kwargs):
@@ -32,8 +33,7 @@ class BaseModel:
 
     def save(self):
         """Save the instance"""
-        self.updated_at = datetime.now()
-        self.my_dict = self.__dict__
+        self.updated_at = datetime.today()
         
 
     def to_dict(self):
