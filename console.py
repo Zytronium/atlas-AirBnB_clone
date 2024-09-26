@@ -1,12 +1,13 @@
 #!/bin/python3
 from cmd import Cmd
 
-class MyCmd(Cmd):
+class HBNBCommand(Cmd):
+    
     def __init__(self):
-        super().__init__()
-        self.intro = ('Welcome to AirBnB Clone Console! Type '
+            super().__init__()
+            self.intro = ('Welcome to AirBnB Clone Console! Type '
                        '"help" or "?" for a list of commands.')
-        self.prompt = '> '
+            self.prompt = '(hbnb) '
 
     @staticmethod
     def do_exit(self):
@@ -21,4 +22,4 @@ class MyCmd(Cmd):
         return True
 
 if __name__ == '__main__':
-    MyCmd().cmdloop()
+    HBNBCommand().cmdloop()
