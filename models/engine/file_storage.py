@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """the FileStorage class."""
 import json
+import os
 
 
 
@@ -22,6 +23,11 @@ class FileStorage:
 
     def save(self):
       """save the dict to the file"""
-      dict = FileStorage.__objects
-      with open(FileStorage.__file_path, 'w') as f:
-        json.dump(dict, f)
+      dict = FileStorage.__objects.copy()
+      with open(FileStorage.__file_path, 'w') as f:       
+          
+
+    def reload(self):
+        """deserializes the file to __object"""
+        if (os.path.isfile(FileStorage.__file_path)):
+            
