@@ -1,7 +1,8 @@
 #!/bin/python3
 """
 module documentation WIP.
-This is the main module for running the command line interface, aka the console
+This is the main module for running the command line interface,
+aka the console. Run this to run the command line interface.
 """
 from cmd import Cmd
 
