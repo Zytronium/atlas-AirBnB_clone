@@ -14,7 +14,8 @@ class HBNBCommand(Cmd):
     def __init__(self):
             super().__init__()
             self.intro = ('Welcome to AirBnB Clone Console! Type '
-                       '"help" or "?" for a list of commands.')
+                          '"help" or "?" for a list of commands. Type '
+                          '"exit" or "quit" to exit.')
             self.prompt = '(rkrlbnb) '
 
     @staticmethod
