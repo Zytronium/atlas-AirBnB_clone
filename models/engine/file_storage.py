@@ -31,17 +31,11 @@ class FileStorage:
 
     def reload(self):
         """deserializes the file to __object"""
-        json_deco = {}
-        if (os.path.isfile(FileStorage.__file_path)):
+        if not os.path.isfile(FileStorage.__file_path):
+            return
+        if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r') as f:
-                json_deco = json.load(f).copy()
-        for key in json_deco.keys():
-            obj_name = key.split(".")[0]
-            obj_id = key.split(".")[1]
-            obj_dict = json_deco[key]
-            obj_dict["__class__"] = obj_name
-            obj_dict["id"] = obj_id
-            obj = BaseModel(**obj_dict)
-                
+                content = json.load(f).read()
+                FileStorage.__objects = content
             
                 
