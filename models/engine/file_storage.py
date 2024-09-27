@@ -26,6 +26,7 @@ class FileStorage:
       """save the dict to the file"""
       dict = FileStorage.__objects.copy()
       with open(FileStorage.__file_path, 'w') as f:
+        json.dump(dict, f)
 
 
     def reload(self):
