@@ -2,6 +2,7 @@
 """the FileStorage class."""
 import json
 import os
+from models.base_model import BaseModel
 
 
 
@@ -24,11 +25,22 @@ class FileStorage:
     def save(self):
       """save the dict to the file"""
       dict = FileStorage.__objects.copy()
-      with open(FileStorage.__file_path, 'w') as f:       
-          
+      with open(FileStorage.__file_path, 'w') as f:
+
 
     def reload(self):
         """deserializes the file to __object"""
+        json_deco = {}
         if (os.path.isfile(FileStorage.__file_path)):
             with open(FileStorage.__file_path, 'r') as f:
+                json_deco = json.load(f).copy()
+        for key in json_deco.keys():
+            obj_name = key.split(".")[0]
+            obj_id = key.split(".")[1]
+            obj_dict = json_deco[key]
+            obj_dict["__class__"] = obj_name
+            obj_dict["id"] = obj_id
+            obj = BaseModel(**obj_dict)
+                
+            
                 
