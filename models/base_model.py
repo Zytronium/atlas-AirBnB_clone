@@ -23,9 +23,6 @@ class BaseModel:
                 else:
                     self.__dict__[name] = value
 
-            
-        
-
     def __str__(self):
         """Print the instance"""
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
