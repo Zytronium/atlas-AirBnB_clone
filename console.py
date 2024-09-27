@@ -1,8 +1,8 @@
 #!/bin/python3
 """
 module documentation WIP.
-This is the main module for running the command line interface,
-aka the console. Run this to run the command line interface.
+This is the main module for running the command line interpreter,
+aka the console. Run this to run the command line interpreter.
 """
 import sys
 import webbrowser
@@ -12,7 +12,7 @@ from os import isatty
 
 class HBNBCommand(Cmd):
     """
-    the main command line interface class
+    the main command line interpreter class
     """
     def __init__(self):
         super().__init__()

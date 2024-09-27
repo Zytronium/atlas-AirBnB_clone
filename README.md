@@ -56,7 +56,7 @@ unable to cancel currently running operation. Error 404^C^C^̴C̵^̴̥̺̥̫̆͋
     - `help <command>`
     - `? <command>`
 - exit, quit, EOF (ctrl+d)
-  - Exit the command line interface.
+  - Exit the command line interpreter.
   - Usage:
     - `exit`
     - `quit`
