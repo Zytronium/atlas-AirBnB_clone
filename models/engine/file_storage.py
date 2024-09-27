@@ -30,4 +30,5 @@ class FileStorage:
     def reload(self):
         """deserializes the file to __object"""
         if (os.path.isfile(FileStorage.__file_path)):
-            
+            with open(FileStorage.__file_path, 'r') as f:
+                
