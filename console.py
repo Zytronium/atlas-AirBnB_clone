@@ -5,6 +5,7 @@ This is the main module for running the command line interface,
 aka the console. Run this to run the command line interface.
 """
 import sys
+import webbrowser
 from cmd import Cmd
 from os import isatty
 
@@ -45,6 +46,11 @@ class HBNBCommand(Cmd):
         print()  # Prints an extra line to force the next cmd prompt in
                  # the terminal to be on a separate line.
         return True
+
+    @staticmethod
+    def do_rickroll(self):
+        """Rickrolls you"""
+        webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
