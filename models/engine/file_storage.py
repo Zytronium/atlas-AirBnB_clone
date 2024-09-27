@@ -24,10 +24,9 @@ class FileStorage:
 
     def save(self):
       """save the dict to the file"""
-      dict = FileStorage.__objects.copy()
+      dict = {n: o.to_dict() for n, o in FileStorage.__objects.items()}
       with open(FileStorage.__file_path, 'w') as f:
         json.dump(dict, f)
-
 
     def reload(self):
         """deserializes the file to __object"""
@@ -36,6 +35,8 @@ class FileStorage:
         if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r') as f:
                 content = json.load(f).read()
-                FileStorage.__objects = content
+                for k, v in content.items():
+                    obj = BaseModel(**v)
+                    FileStorage.__objects[k] = obj
             
                 
