@@ -22,6 +22,10 @@ class HBNBCommand(Cmd):
         """Exit the program."""
         return True
 
+    @staticmethod
+    def do_quit(self):
+        """Exit the program."""
+        return True
 
     @staticmethod
     def do_EOF(self):
