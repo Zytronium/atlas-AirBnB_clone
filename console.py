@@ -1,8 +1,15 @@
 #!/bin/python3
+"""
+module documentation WIP.
+This is the main module for running the command line interface, aka the console
+"""
 from cmd import Cmd
 
+
 class HBNBCommand(Cmd):
-    
+    """
+    the main command line interface class
+    """
     def __init__(self):
             super().__init__()
             self.intro = ('Welcome to AirBnB Clone Console! Type '
