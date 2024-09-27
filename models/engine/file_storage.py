@@ -32,11 +32,14 @@ class FileStorage:
         """deserializes the file to __object"""
         if not os.path.isfile(FileStorage.__file_path):
             return
-        if os.path.isfile(FileStorage.__file_path):
-            with open(FileStorage.__file_path, 'r') as f:
-                content = json.load(f).read()
-                for k, v in content.items():
-                    obj = BaseModel(**v)
-                    FileStorage.__objects[k] = obj
-            
+        try:
+            if os.path.isfile(FileStorage.__file_path):
+                with open(FileStorage.__file_path, 'r') as f:
+                    content = json.load(f)
+                    for k, v in content.items():
+                            obj = eval(f"{v['__class__']}(**v)")
+                            FileStorage.__objects[k] = obj
+        except Exception as e:
+            print(e)
+
                 
