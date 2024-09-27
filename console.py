@@ -4,7 +4,9 @@ module documentation WIP.
 This is the main module for running the command line interface,
 aka the console. Run this to run the command line interface.
 """
+import sys
 from cmd import Cmd
+from os import isatty
 
 
 class HBNBCommand(Cmd):
@@ -13,9 +15,10 @@ class HBNBCommand(Cmd):
     """
     def __init__(self):
             super().__init__()
-            self.intro = ('Welcome to AirBnB Clone Console! Type '
-                          '"help" or "?" for a list of commands. Type '
-                          '"exit" or "quit" to exit.')
+            if isatty(sys.stdin.isatty()):
+                self.intro = ('Welcome to AirBnB Clone Console! Type '
+                              '"help" or "?" for a list of commands. Type '
+                              '"exit" or "quit" to exit.')
             self.prompt = '(hbnb) '
 
     @staticmethod
