@@ -15,12 +15,13 @@ class HBNBCommand(Cmd):
     """
     def __init__(self):
             super().__init__()
-            if isatty(sys.stdin.isatty()):
+            if isatty(sys.stdin.isatty()):  # only sets intro in interactive
                 self.intro = ('Welcome to AirBnB Clone Console! Type '
                               '"help" or "?" for a list of commands. Type '
                               '"exit" or "quit" to exit.')
             self.prompt = '(hbnb) '
 
+    # ======================== user commands ========================
     @staticmethod
     def do_exit(self):
         """Exit the program."""
