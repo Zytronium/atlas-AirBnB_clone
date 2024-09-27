@@ -1,24 +1,42 @@
 #!/bin/python3
+"""
+module documentation WIP.
+This is the main module for running the command line interface,
+aka the console. Run this to run the command line interface.
+"""
+import sys
 from cmd import Cmd
+from os import isatty
+
 
 class HBNBCommand(Cmd):
-    
+    """
+    the main command line interface class
+    """
     def __init__(self):
             super().__init__()
-            self.intro = ('Welcome to AirBnB Clone Console! Type '
-                       '"help" or "?" for a list of commands.')
+            if isatty(sys.stdin.isatty()):  # only sets intro in interactive
+                self.intro = ('Welcome to AirBnB Clone Console! Type '
+                              '"help" or "?" for a list of commands. Type '
+                              '"exit" or "quit" to exit.')
             self.prompt = '(hbnb) '
 
+    # ======================== user commands ========================
     @staticmethod
     def do_exit(self):
         """Exit the program."""
         return True
 
+    @staticmethod
+    def do_quit(self):
+        """Exit the program."""
+        return True
 
     @staticmethod
     def do_EOF(self):
         """EOF signal (usually ctl+d) will run this to exit the program."""
-        print()
+        print()  # Prints an extra line to force the next cmd prompt in
+                 # the terminal to be on a separate line.
         return True
 
 if __name__ == '__main__':
