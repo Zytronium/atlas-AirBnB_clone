@@ -14,12 +14,19 @@ class HBNBCommand(Cmd):
     the main command line interface class
     """
     def __init__(self):
-            super().__init__()
-            if isatty(sys.stdin.isatty()):  # only sets intro in interactive
-                self.intro = ('Welcome to AirBnB Clone Console! Type '
-                              '"help" or "?" for a list of commands. Type '
-                              '"exit" or "quit" to exit.')
-            self.prompt = '(hbnb) '
+        super().__init__()
+        if isatty(sys.stdin.isatty()):  # only sets intro in interactive
+            self.intro = ('Welcome to AirBnB Clone Console! Type '
+                          '"help" or "?" for a list of commands. Type '
+                          '"exit" or "quit" to exit.')
+        self.prompt = '(hbnb) '
+
+    def emptyline(self):
+        """
+        overrides default method that runs when en empty command is run.
+        Instead, it will do nothing when there is no command.
+        """
+        pass
 
     # ======================== user commands ========================
     @staticmethod
