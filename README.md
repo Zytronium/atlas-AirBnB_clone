@@ -12,24 +12,72 @@ Velit ex porttitor viverra dolor euismod massa sollicitudin. Posuere placerat
 netus dolor massa conubia platea. Ex cubilia mi fusce semper pharetra dapibus
 dictum. Primis augue primis bibendum consequat sit penatibus et.
 
-### How to start it
-To start the command interpreter, run the following command in your terminal.
+---
 
-##### Linux:
-*This is a placeholder command. It is not really meant to be run*
+### How to start the console
+Because of certain restrictions, this console was designed for Python 3.8,*
+though it works on the latest Python 3.12 and most likely with 3.13 (whose
+release date is Oct 1st 2024). It is also recommended to use a terminal that
+supports the following text effects: colors, bold, concealed, reversed, and
+blinking.
+
+To start the command interpreter, the best way to run it is by opening it in
+a terminal. Here are the most likely commands that are needed to run in the
+terminal, based on which operating system you are on (assuming the current
+directory is `atlas-AirBnB_clone`):
+
+<details>
+<summary>Linux (or WSL)</summary>
+
+With python installed in /bin/python3:
 ```bash 
-startapp --config /etc/startapp.conf --verbose
+./console.py
 ```
-##### MacOS:
+With python installed somewhere else:
+```bash
+python3 ./console.py
+```
+or
+```bash
+python ./console.py
+```
+</details>
+
+<details>
+<summary>MacOS</summary>
+
 *This is a placeholder command. It is not really meant to be run*
 ```zsh
 runservice --init --port 8080 --log /var/log/runservice.log
 ```
-##### Windows:
-*This is a placeholder command. It is not really meant to be run*
+</details>
+
+<details>
+<summary>Windows</summary>
+
 ```shell
-runutility --verbose --logfile /var/log/runutility.log
+.\console.py
 ```
+or
+```shell
+python3 .\console.py
+```
+</details>
+
+<details>
+<summary>Minecraft (Command Block)</summary>
+
+```commandblock
+/execute as @p run file[name=console.py]
+```
+Okay, maybe that doesn't work in Minecraft, but it could be recreated in
+Minecraft with some time and dedication.
+</details>
+
+*: Support for Python 3.8 will drop when 3.13 comes out on October 1st. It is
+therefore recommended to use 3.9 or later instead.
+
+---
 
 ### How to use it
 Nullam eget adipiscing porttitor nisi dapibus neque a. Sagittis semper egestas
