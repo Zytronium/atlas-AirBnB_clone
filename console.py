@@ -9,8 +9,14 @@ import webbrowser
 from cmd import Cmd
 from os import isatty
 from time import sleep
-
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
 from models.colors import *
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class HBNBCommand(Cmd):
@@ -65,6 +71,9 @@ class HBNBCommand(Cmd):
             super().default(line)
 
     # ======================== user commands ========================
+
+    # ======================== exit commands ========================
+
     @staticmethod
     def do_exit(self):
         """Exit the program."""
@@ -81,6 +90,41 @@ class HBNBCommand(Cmd):
         print()  # Prints an extra line to force the next cmd prompt in
                  # the terminal to be on a separate line.
         return True
+
+    # ================== data modification commands ==================
+
+    def do_create(self, clsname):
+        """
+Creates and saves an instance of className and prints the ID.
+className: name of the class of the new instance to be created
+Usage: create <className>
+        """
+        if clsname == "":
+            print("** class name missing **")
+            return
+        if clsname == 'BaseModel':
+            cls = BaseModel
+        elif clsname == 'User':
+            cls = User
+        elif clsname == 'Review':
+            cls = Review
+        elif clsname == 'Amenity':
+            cls = Amenity
+        elif clsname == 'Place':
+            cls = Place
+        elif clsname == 'State':
+            cls = State
+        elif clsname == 'City':
+            cls = City
+        else:
+            print("** class doesn't exist **")
+            return
+
+        new_instance = cls()
+        cls.save(new_instance)
+        print(new_instance.id)
+
+    # ====================== misc fun commands ======================
 
     @staticmethod
     def do_rickroll(self):
