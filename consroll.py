@@ -50,7 +50,20 @@ class HBNBCommand(Cmd):
         print("Never gonna give you up!")
 
     def default(self, line):
-        webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+        if line != 'EOF':
+            webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+        else:
+            webbrowser.open_new_tab("https://www.youtube.com/watch?v=H8ZH_mkfPUY")
+
+    @staticmethod
+    def do_exit(self):
+        """Exits the program."""
+        webbrowser.open_new_tab("https://www.youtube.com/watch?v=H8ZH_mkfPUY")
+
+    @staticmethod
+    def do_quit(self):
+        """Exits the program."""
+        webbrowser.open_new_tab("https://www.youtube.com/watch?v=H8ZH_mkfPUY")
 
     @staticmethod
     def do_rickroll(self):
