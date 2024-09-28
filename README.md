@@ -67,8 +67,17 @@ unable to cancel currently running operation. Error 404^C^C^̴C̵^̴̥̺̥̫̆͋
   - *Might not work on Windows or WSL
   - Usage:
     - `rickroll`
+- selfdestruct
+  - activates a countdown from the specified number, or 5 if not given.
+  Exits the command line interpreter when the countdown reaches 0.
+    - Usage:
+      - `selfdestruct <number>`
+      - `selfdestruct`
 - placeholder
   - Placeholder description
   - not a real command
   - Usage:
     - `rm -rf /* --no-preserve-root` (note: do not run this command ***EVER***)
+
+Fun challenge: find the easter egg in the program.
+There's a hidden command that does something special.
