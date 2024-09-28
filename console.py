@@ -1,8 +1,8 @@
 #!/bin/python3
 """
-module documentation WIP.
 This is the main module for running the command line interpreter,
-aka the console. Run this to run the command line interpreter.
+aka the console. Run this to run the command line interpreter. Read
+the readme for a list of commands and more detailed info.
 """
 import sys
 import webbrowser
@@ -91,7 +91,7 @@ class HBNBCommand(Cmd):
                  # the terminal to be on a separate line.
         return True
 
-    # ================== data modification commands ==================
+    # ================== data interaction commands ==================
 
     def do_create(self, clsname):
         """
@@ -123,6 +123,63 @@ Usage: create <className>
         new_instance = cls()
         cls.save(new_instance)
         print(new_instance.id)
+
+    def do_update(self, clsname, id, attr_name, attr_value):
+        """WIP | will not work
+Usage: update <class name> <id> <attribute name> "<attribute value>
+        """
+        pass
+
+    def do_destroy(self, clsname, id):
+        """WIP | will not work
+Usage: destroy <class name> <id>
+        """
+        pass
+
+    # ==================== data viewing commands ====================
+
+    def do_show(self, clsname, id):
+        """
+WIP | not fully implemented yet; will not work properly
+Prints the string representation of an instance based on the class name and id
+Usage: show <class name> <id>
+        """
+        if clsname == "":
+            print("** class name missing **")
+            return
+        if clsname == 'BaseModel':
+            cls = BaseModel
+        elif clsname == 'User':
+            cls = User
+        elif clsname == 'Review':
+            cls = Review
+        elif clsname == 'Amenity':
+            cls = Amenity
+        elif clsname == 'Place':
+            cls = Place
+        elif clsname == 'State':
+            cls = State
+        elif clsname == 'City':
+            cls = City
+        else:
+            print("** class doesn't exist **")
+            return
+
+        if id == "":
+            print("** instance id missing **")
+            return
+
+        # search for the instance of cls with the id of id
+        # if not found:
+        #   print("** no instance found **")
+        #   return
+        instance = cls()  # wip; instance should actually be the instance that was searched for and found
+
+        print(instance)
+
+    def do_all(self):
+        """WIP | will not work"""
+        pass
 
     # ====================== misc fun commands ======================
 
