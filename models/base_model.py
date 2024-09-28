@@ -14,8 +14,10 @@ class BaseModel:
         format = '%Y-%m-%dT%H:%M:%S.%f'
         if kwargs:
             for name, value in kwargs.items():
-                if name == 'created_at' or name == 'updated_at':
-                    self.__dict__[value] = datetime.strptime(value, format)
+                if name == 'created_at':
+                    self.created_at = datetime.strptime(value, format)
+                elif name == 'updated_at':
+                    self.updated_at = datetime.strptime(value, format)
                 else:
                     setattr(self, name, value)
         else:
