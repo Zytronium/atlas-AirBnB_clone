@@ -90,8 +90,9 @@ class HBNBCommand(Cmd):
     @staticmethod
     def do_selfdestruct(timer: str):
         """
-Activates self-destruct mode. If there is no number given, it will count down
-from 5.
+Activates self-destruct mode, which starts a countdown from the specified
+number, or 5 if not given. Exits the command line interpreter when
+the countdown reaches 0.
 Arguments: number (optional) - amount of seconds to count down from
 Usage: selfdestruct <number>
         """
@@ -120,7 +121,7 @@ Usage: selfdestruct <number>
         reset_color()
         set_color('yellow')
         # set_color('reverse')
-        print("Console has been obliterated. Goodbye.")
+        print("The console has been obliterated. Goodbye.")
         reset_color()
         return True
 
