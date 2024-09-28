@@ -45,3 +45,30 @@ deleting system32...
 ^C^C
 unable to cancel currently running operation. Error 404^C^C^̴C̵^̴̥̺̥̫̱̞̆͋C̴̬̺̐̓́̎͆͝^̸͎̙́̒͌̑͗̉̋̍͂͝Ç̴̼͔͉̻͎͚͔͕̗̤̯̝͇̗͌͛̀͋̄̄ͅ 
 ```
+
+### Commands
+
+- ?, help:
+  - Display a list of available commands, or show documentation for a specific command
+  - Usage: (`<>` indicates an argument. Do not type the brackets.)
+    - `help`
+    - `?`
+    - `help <command>`
+    - `? <command>`
+- exit, quit, EOF (ctrl+d)
+  - Exit the command line interpreter.
+  - Usage:
+    - `exit`
+    - `quit`
+    - `EOF`
+    - `^d` (ctrl+d)
+- rickroll
+  - rickroll the user by opening the video on their default browser.
+  - *Might not work on Windows or WSL
+  - Usage:
+    - `rickroll`
+- placeholder
+  - Placeholder description
+  - not a real command
+  - Usage:
+    - `rm -rf /* --no-preserve-root` (note: do not run this command ***EVER***)
