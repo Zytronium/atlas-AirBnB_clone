@@ -9,8 +9,14 @@ import webbrowser
 from cmd import Cmd
 from os import isatty
 from time import sleep
-
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
 from models.colors import *
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class HBNBCommand(Cmd):
@@ -65,6 +71,9 @@ class HBNBCommand(Cmd):
             super().default(line)
 
     # ======================== user commands ========================
+
+    # ======================== exit commands ========================
+
     @staticmethod
     def do_exit(self):
         """Exit the program."""
@@ -82,6 +91,41 @@ class HBNBCommand(Cmd):
                  # the terminal to be on a separate line.
         return True
 
+    # ================== data modification commands ==================
+
+    def do_create(self, clsname):
+        """
+Creates and saves an instance of className and prints the ID.
+className: name of the class of the new instance to be created
+Usage: create <className>
+        """
+        if clsname == "":
+            print("** class name missing **")
+            return
+        if clsname == 'BaseModel':
+            cls = BaseModel
+        elif clsname == 'User':
+            cls = User
+        elif clsname == 'Review':
+            cls = Review
+        elif clsname == 'Amenity':
+            cls = Amenity
+        elif clsname == 'Place':
+            cls = Place
+        elif clsname == 'State':
+            cls = State
+        elif clsname == 'City':
+            cls = City
+        else:
+            print("** class doesn't exist **")
+            return
+
+        new_instance = cls()
+        cls.save(new_instance)
+        print(new_instance.id)
+
+    # ====================== misc fun commands ======================
+
     @staticmethod
     def do_rickroll(self):
         """Rickrolls you"""
@@ -90,8 +134,9 @@ class HBNBCommand(Cmd):
     @staticmethod
     def do_selfdestruct(timer: str):
         """
-Activates self-destruct mode. If there is no number given, it will count down
-from 5.
+Activates self-destruct mode, which starts a countdown from the specified
+number, or 5 if not given. Exits the command line interpreter when
+the countdown reaches 0.
 Arguments: number (optional) - amount of seconds to count down from
 Usage: selfdestruct <number>
         """
@@ -120,7 +165,7 @@ Usage: selfdestruct <number>
         reset_color()
         set_color('yellow')
         # set_color('reverse')
-        print("Console has been obliterated. Goodbye.")
+        print("The console has been obliterated. Goodbye.")
         reset_color()
         return True
 
