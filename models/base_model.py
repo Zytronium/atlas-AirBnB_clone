@@ -5,7 +5,6 @@ import uuid
 from datetime import datetime
 
 
-
 class BaseModel:
     """base atributes for each instance"""
     def __init__(self, *args, **kwargs):
@@ -28,7 +27,8 @@ class BaseModel:
             
     def __str__(self):
         """print the instance"""
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id,
+                                     self.__dict__)
 
     def save(self):
         """save the instance"""
@@ -42,4 +42,3 @@ class BaseModel:
         dict["created_at"] = self.created_at.isoformat()
         dict["updated_at"] = self.updated_at.isoformat()
         return dict
-
