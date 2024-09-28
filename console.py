@@ -48,6 +48,22 @@ class HBNBCommand(Cmd):
         """
         pass
 
+    def default(self, line):
+        """
+        Overrides default method that runs if the given command is not found.
+        If the input is "easter egg" then it runs a hidden command that is not
+        listed when you run "help"
+        :param line: user input
+        """
+        if line == "easter egg":
+            print("You found the easter egg!")
+            sleep(3)
+            webbrowser.open_new_tab(
+                "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            print("Never gonna give you up!")
+        else:
+            super().default(line)
+
     # ======================== user commands ========================
     @staticmethod
     def do_exit(self):
