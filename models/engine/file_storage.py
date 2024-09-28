@@ -37,7 +37,9 @@ class FileStorage:
                 with open(FileStorage.__file_path, 'r') as f:
                     content = json.load(f)
                     for k, v in content.items():
-                            obj = eval(f"{v['__class__']}(**v)")
+                        class_name = v.pop('__class__', None)
+                        if class_name:
+                            obj = eval(f"{class_name}(**v)")
                             FileStorage.__objects[k] = obj
         except Exception as e:
             print(e)
