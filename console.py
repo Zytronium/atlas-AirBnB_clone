@@ -75,17 +75,17 @@ class HBNBCommand(Cmd):
     # ======================== exit commands ========================
 
     @staticmethod
-    def do_exit(self):
+    def do_exit(args):
         """Exit the program."""
         return True
 
     @staticmethod
-    def do_quit(self):
+    def do_quit(args):
         """Exit the program."""
         return True
 
     @staticmethod
-    def do_EOF(self):
+    def do_EOF(args):
         """EOF signal (usually ctl+d) will run this to exit the program."""
         print()  # Prints an extra line to force the next cmd prompt in
                  # the terminal to be on a separate line.
@@ -93,7 +93,8 @@ class HBNBCommand(Cmd):
 
     # ================== data interaction commands ==================
 
-    def do_create(self, clsname):
+    @staticmethod
+    def do_create(clsname):
         """
 Creates and saves an instance of className and prints the ID.
 className: name of the class of the new instance to be created
@@ -124,21 +125,48 @@ Usage: create <className>
         cls.save(new_instance)
         print(new_instance.id)
 
-    def do_update(self, clsname, id, attr_name, attr_value):
+    @staticmethod
+    def do_update(argstr):
         """WIP | will not work
 Usage: update <class name> <id> <attribute name> "<attribute value>
         """
-        pass
+        args = argstr.split(' ')
+        n = len(args)
+        if n == 1:
+            pass
+            # id not given
+        elif n == 2:
+            pass
+            # attr_name not given
+        elif n == 3:
+            pass
+            # attr_value not given
+        clsname = args[0]
+        id = args[1]
+        attr_name = args[2]
+        attr_value = args[3]
 
-    def do_destroy(self, clsname, id):
+        # WIP
+
+    @staticmethod
+    def do_destroy(argstr):
         """WIP | will not work
 Usage: destroy <class name> <id>
         """
-        pass
+        args = argstr.split(' ')
+        n = len(args)
+        if n == 1:
+            pass
+            # id not given
+        clsname = args[0]
+        id = args[1]
+
+        # WIP
 
     # ==================== data viewing commands ====================
 
-    def do_show(self, clsname, id):
+    @staticmethod
+    def do_show(clsname, id):
         """
 WIP | not fully implemented yet; will not work properly
 Prints the string representation of an instance based on the class name and id
@@ -177,19 +205,42 @@ Usage: show <class name> <id>
 
         print(instance)
 
-    def do_all(self):
-        """WIP | will not work"""
-        pass
+    @staticmethod
+    def do_all(clsname):
+        """WIP | will not work properly"""
+        if clsname == "":
+            print("** class name missing **")
+            return
+        if clsname == 'BaseModel':
+            cls = BaseModel
+        elif clsname == 'User':
+            cls = User
+        elif clsname == 'Review':
+            cls = Review
+        elif clsname == 'Amenity':
+            cls = Amenity
+        elif clsname == 'Place':
+            cls = Place
+        elif clsname == 'State':
+            cls = State
+        elif clsname == 'City':
+            cls = City
+        else:
+            print("** class doesn't exist **")
+            return
+
+        # list all instances of class cls
+        # WIP
 
     # ====================== misc fun commands ======================
 
     @staticmethod
-    def do_rickroll(self):
+    def do_rickroll(args):
         """Rickrolls you"""
         webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
     @staticmethod
-    def do_selfdestruct(timer: str):
+    def do_selfdestruct(timer):
         """
 Activates self-destruct mode, which starts a countdown from the specified
 number, or 5 if not given. Exits the command line interpreter when
