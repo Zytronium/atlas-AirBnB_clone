@@ -12,18 +12,18 @@ class BaseModel:
         """initialize the instance"""
  
         format = '%Y-%m-%dT%H:%M:%S.%f'
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.today()
+        self.updated_at = datetime.today()
         if kwargs:
-            for name, value in kwargs.items():
-                if name == 'created_at':
-                    self.created_at = datetime.strptime(value, format)
-                elif name == 'updated_at':
-                    self.updated_at = datetime.strptime(value, format)
+            for nattr, vattr in kwargs.items():
+                if nattr == '__class__':
+                    continue
+                elif nattr in ['created_at', 'updated_at']:
+                    self.__dict__[nattr] = datetime.strptime(vattr, format)
                 else:
-                    setattr(self, name, value)
+                    self.__dict__[nattr] = vattr                
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.today()
-            self.updated_at = datetime.today()
             models.storage.new(self)
             
     def __str__(self):
