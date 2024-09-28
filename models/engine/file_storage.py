@@ -23,10 +23,13 @@ class FileStorage:
         FileStorage.__objects[f"{obj_name}.{key}"] = obj
 
     def save(self):
-      """save the dict to the file"""
-      dict = {n: o.to_dict() for n, o in FileStorage.__objects.items()}
-      with open(FileStorage.__file_path, 'w') as f:
-        json.dump(dict, f)
+        """save the dict to the file"""
+        dict = {}
+        for nattr, vattr in FileStorage.__objects.items():
+            if vattr:
+                dict[nattr] = vattr.to_dict()
+                with open(FileStorage.__file_path, 'w') as f:
+                    json.dump(dict, f)
 
     def reload(self):
         """deserializes the file to __object"""
