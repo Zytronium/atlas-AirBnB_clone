@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 class BaseModel:
-    """base atributes for each instance"""
+    """base attributes for each instance"""
     def __init__(self, *args, **kwargs):
         """initialize the instance"""
  

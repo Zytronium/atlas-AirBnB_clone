@@ -9,6 +9,8 @@ import webbrowser
 from cmd import Cmd
 from os import isatty
 from time import sleep
+
+from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -168,69 +170,38 @@ Usage: destroy <class name> <id>
     @staticmethod
     def do_show(clsname, id):
         """
-WIP | not fully implemented yet; will not work properly
 Prints the string representation of an instance based on the class name and id
 Usage: show <class name> <id>
         """
-        if clsname == "":
-            print("** class name missing **")
-            return
-        if clsname == 'BaseModel':
-            cls = BaseModel
-        elif clsname == 'User':
-            cls = User
-        elif clsname == 'Review':
-            cls = Review
-        elif clsname == 'Amenity':
-            cls = Amenity
-        elif clsname == 'Place':
-            cls = Place
-        elif clsname == 'State':
-            cls = State
-        elif clsname == 'City':
-            cls = City
-        else:
-            print("** class doesn't exist **")
+        cls = HBNBCommand.get_class(clsname)
+        if cls is None:
             return
 
-        if id == "":
-            print("** instance id missing **")
+        instance_found = False
+        for instance in storage.all():
+            if type(instance) is cls and instance.id == id:
+                print(instance)
+                instance_found = True
+                break
+        if not instance_found:
+            print("** no instance found **")
             return
-
-        # search for the instance of cls with the id of id
-        # if not found:
-        #   print("** no instance found **")
-        #   return
-        instance = cls()  # wip; instance should actually be the instance that was searched for and found
-
-        print(instance)
 
     @staticmethod
     def do_all(clsname):
-        """WIP | will not work properly"""
-        if clsname == "":
-            print("** class name missing **")
+        """
+Prints the representations of all instances of the given class name
+Usage: all <class name>
+        """
+        cls = HBNBCommand.get_class(clsname)
+        if cls is None:
             return
-        if clsname == 'BaseModel':
-            cls = BaseModel
-        elif clsname == 'User':
-            cls = User
-        elif clsname == 'Review':
-            cls = Review
-        elif clsname == 'Amenity':
-            cls = Amenity
-        elif clsname == 'Place':
-            cls = Place
-        elif clsname == 'State':
-            cls = State
-        elif clsname == 'City':
-            cls = City
-        else:
-            print("** class doesn't exist **")
-            return
+        instances = []
+        for instance in storage.all():
+            if type(instance) is cls:
+                instances.append(str(instance))
 
-        # list all instances of class cls
-        # WIP
+        print(instances)
 
     # ====================== misc fun commands ======================
 
@@ -272,11 +243,32 @@ Usage: selfdestruct <number>
         sleep(1)
         reset_color()
         set_color('yellow')
-        # set_color('reverse')
         print("The console has been obliterated. Goodbye.")
         reset_color()
         return True
 
+    @staticmethod
+    def get_class(clsname):
+        if clsname == "":
+            print("** class name missing **")
+            return None
+        if clsname == 'BaseModel':
+            return BaseModel
+        elif clsname == 'User':
+            return User
+        elif clsname == 'Review':
+            return Review
+        elif clsname == 'Amenity':
+            return Amenity
+        elif clsname == 'Place':
+            return Place
+        elif clsname == 'State':
+            return State
+        elif clsname == 'City':
+            return City
+        else:
+            print("** class doesn't exist **")
+            return None
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
