@@ -107,7 +107,8 @@ Usage: create <className>
             return
 
         new_instance = cls()
-        cls.save(new_instance)
+        """clay - changed this to new_instance.save()"""
+        new_instance.save() 
         print(new_instance.id)
 
     @staticmethod
@@ -152,6 +153,7 @@ Usage: destroy <class name> <id>
         # WIP
 
     # ==================== data viewing commands ====================
+
 
     @staticmethod
     def do_show(argstr):
