@@ -102,6 +102,7 @@ Creates and saves an instance of className and prints the ID.
 className: name of the class of the new instance to be created
 Usage: create <className>
         """
+
         cls = HBNBCommand.get_class(clsname)
         if cls is None:
             return
@@ -190,21 +191,23 @@ Prints the string representation of an instance based on the class name and id
 Usage: show <class name> <id>
         """
         args = HBNBCommand.parse_args(argstr, 2)
-        clsname = args[0]
+        clsname = HBNBCommand.get_class(args[0])
         id = args[1]
-        cls = HBNBCommand.get_class(clsname)
-        if cls is None:
+        
+        if clsname is None:
+            print("** class name missing **")
             return
         if id == '':
             print("** instance id missing **")
             return
 
         instance_found = False
-        for instance in storage.all():
-            if type(instance) is cls and instance.id == id:
+        for instance in storage.all().values():
+            if type(instance) is clsname and instance.id == id:
                 print(instance)
                 instance_found = True
                 break
+
         if not instance_found:
             print("** no instance found **")
             return
@@ -219,7 +222,7 @@ Usage: all <class name>
         if cls is None:
             return
         instances = []
-        for instance in storage.all():
+        for instance in storage.all().values():
             if type(instance) is cls:
                 instances.append(str(instance))
 
