@@ -126,28 +126,28 @@ Usage: update <class name> <id> <attribute name> "<attribute value>
         if cls is None:
             return
         if id == '':
-            print("** class name missing **")
+            print("** instance id missing **")
             return
         if attr_name == '':
             print("** attribute name missing **")
             return
         if attr_value == '':
-            print("** attribute value missing **")
+            print("** value missing **")
             return
 
         instance_found = False
         for instance in storage.all().values():
-            if type(instance) == cls and instance.id == id:
+            if type(instance) is cls and instance.id == id:
                 setattr(instance, attr_name, attr_value)
                 instance.save()
                 instance_found = True
                 break
+
         if not instance_found:
             print("** no instance found **")
-        
+
 
         # WIP
-
     @staticmethod
     def do_destroy(argstr):
         """WIP | will not work
@@ -157,6 +157,10 @@ Usage: destroy <class name> <id>
         clsname = args[0]
         id = args[1]
 
+        if clsname == '':
+            print("** class name missing **")
+            return
+
         cls = HBNBCommand.get_class(clsname)
         if cls is None:
             return
@@ -165,11 +169,12 @@ Usage: destroy <class name> <id>
             return
 
         instance_found = False
-        for content, instance in storage.all().items():
+        for content, instance in list(storage.all().items()):
             if type(instance) is cls and instance.id == id:
                 del storage.all()[content]
                 instance_found = True
                 break
+
         if not instance_found:
             print("** no instance found **")
             return
