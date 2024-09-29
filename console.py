@@ -9,6 +9,8 @@ import webbrowser
 from cmd import Cmd
 from os import isatty
 from time import sleep
+
+from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -100,25 +102,8 @@ Creates and saves an instance of className and prints the ID.
 className: name of the class of the new instance to be created
 Usage: create <className>
         """
-        if clsname == "":
-            print("** class name missing **")
-            return
-        if clsname == 'BaseModel':
-            cls = BaseModel
-        elif clsname == 'User':
-            cls = User
-        elif clsname == 'Review':
-            cls = Review
-        elif clsname == 'Amenity':
-            cls = Amenity
-        elif clsname == 'Place':
-            cls = Place
-        elif clsname == 'State':
-            cls = State
-        elif clsname == 'City':
-            cls = City
-        else:
-            print("** class doesn't exist **")
+        cls = HBNBCommand.get_class(clsname)
+        if cls is None:
             return
 
         new_instance = cls()
@@ -130,17 +115,7 @@ Usage: create <className>
         """WIP | will not work
 Usage: update <class name> <id> <attribute name> "<attribute value>
         """
-        args = argstr.split(' ')
-        n = len(args)
-        if n == 1:
-            pass
-            # id not given
-        elif n == 2:
-            pass
-            # attr_name not given
-        elif n == 3:
-            pass
-            # attr_value not given
+        args = HBNBCommand.parse_args(argstr, 4)
         clsname = args[0]
         id = args[1]
         attr_name = args[2]
@@ -153,84 +128,72 @@ Usage: update <class name> <id> <attribute name> "<attribute value>
         """WIP | will not work
 Usage: destroy <class name> <id>
         """
-        args = argstr.split(' ')
-        n = len(args)
-        if n == 1:
-            pass
-            # id not given
+        args = HBNBCommand.parse_args(argstr, 2)
         clsname = args[0]
         id = args[1]
+
+        cls = HBNBCommand.get_class(clsname)
+        if cls is None:
+            return
+        if id == '':
+            print("** instance id missing **")
+            return
+
+        instance_found = False
+        for instance in storage.all():
+            if type(instance) is cls and instance.id == id:
+                # delete instance from storage
+                instance_found = True
+                break
+        if not instance_found:
+            print("** no instance found **")
+            return
 
         # WIP
 
     # ==================== data viewing commands ====================
 
     @staticmethod
-    def do_show(clsname, id):
+    def do_show(argstr):
         """
-WIP | not fully implemented yet; will not work properly
 Prints the string representation of an instance based on the class name and id
 Usage: show <class name> <id>
         """
-        if clsname == "":
-            print("** class name missing **")
+        args = HBNBCommand.parse_args(argstr, 2)
+        clsname = args[0]
+        id = args[1]
+        cls = HBNBCommand.get_class(clsname)
+        if cls is None:
             return
-        if clsname == 'BaseModel':
-            cls = BaseModel
-        elif clsname == 'User':
-            cls = User
-        elif clsname == 'Review':
-            cls = Review
-        elif clsname == 'Amenity':
-            cls = Amenity
-        elif clsname == 'Place':
-            cls = Place
-        elif clsname == 'State':
-            cls = State
-        elif clsname == 'City':
-            cls = City
-        else:
-            print("** class doesn't exist **")
-            return
-
-        if id == "":
+        if id == '':
             print("** instance id missing **")
             return
 
-        # search for the instance of cls with the id of id
-        # if not found:
-        #   print("** no instance found **")
-        #   return
-        instance = cls()  # wip; instance should actually be the instance that was searched for and found
-
-        print(instance)
+        instance_found = False
+        for instance in storage.all():
+            if type(instance) is cls and instance.id == id:
+                print(instance)
+                instance_found = True
+                break
+        if not instance_found:
+            print("** no instance found **")
+            return
 
     @staticmethod
     def do_all(clsname):
-        """WIP | will not work properly"""
-        if clsname == "":
-            print("** class name missing **")
+        """
+Prints the representations of all instances of the given class name
+Usage: all <class name>
+        """
+        cls = HBNBCommand.get_class(clsname)
+        if cls is None:
             return
-        if clsname == 'BaseModel':
-            cls = BaseModel
-        elif clsname == 'User':
-            cls = User
-        elif clsname == 'Review':
-            cls = Review
-        elif clsname == 'Amenity':
-            cls = Amenity
-        elif clsname == 'Place':
-            cls = Place
-        elif clsname == 'State':
-            cls = State
-        elif clsname == 'City':
-            cls = City
-        else:
-            print("** class doesn't exist **")
-            return
+        instances = []
+        for instance in storage.all():
+            if type(instance) is cls:
+                instances.append(str(instance))
 
-        # list all instances of class cls
-        # WIP
+        print(instances)
 
     # ====================== misc fun commands ======================
 
@@ -272,11 +235,47 @@ Usage: selfdestruct <number>
         sleep(1)
         reset_color()
         set_color('yellow')
-        # set_color('reverse')
         print("The console has been obliterated. Goodbye.")
         reset_color()
         return True
 
+    @staticmethod
+    def get_class(clsname):
+        if clsname == "":
+            print("** class name missing **")
+            return None
+        if clsname == 'BaseModel':
+            return BaseModel
+        elif clsname == 'User':
+            return User
+        elif clsname == 'Review':
+            return Review
+        elif clsname == 'Amenity':
+            return Amenity
+        elif clsname == 'Place':
+            return Place
+        elif clsname == 'State':
+            return State
+        elif clsname == 'City':
+            return City
+        else:
+            print("** class doesn't exist **")
+            return None
+
+    @staticmethod
+    def parse_args(argstr, num_args = 3):
+        """
+        parse args by converting a string of args (argstr) into individual args
+        :param argstr: args string
+        :param num_args: number of args to parse. 3 by default if left empty
+        :return: a list of args
+        """
+        args = argstr.split(' ')
+        if len(args) < num_args:
+            add_args = num_args - len(args)
+            for i in range(add_args):
+                args.append('')
+        return args
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
