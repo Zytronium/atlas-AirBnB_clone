@@ -102,25 +102,8 @@ Creates and saves an instance of className and prints the ID.
 className: name of the class of the new instance to be created
 Usage: create <className>
         """
-        if clsname == "":
-            print("** class name missing **")
-            return
-        if clsname == 'BaseModel':
-            cls = BaseModel
-        elif clsname == 'User':
-            cls = User
-        elif clsname == 'Review':
-            cls = Review
-        elif clsname == 'Amenity':
-            cls = Amenity
-        elif clsname == 'Place':
-            cls = Place
-        elif clsname == 'State':
-            cls = State
-        elif clsname == 'City':
-            cls = City
-        else:
-            print("** class doesn't exist **")
+        cls = HBNBCommand.get_class(clsname)
+        if cls is None:
             return
 
         new_instance = cls()
@@ -163,18 +146,29 @@ Usage: destroy <class name> <id>
         clsname = args[0]
         id = args[1]
 
+
         # WIP
 
     # ==================== data viewing commands ====================
 
     @staticmethod
-    def do_show(clsname, id):
+    def do_show(argstr):
         """
 Prints the string representation of an instance based on the class name and id
 Usage: show <class name> <id>
         """
+        args = argstr.split(' ')
+        n = len(args)
+        if n == 1:  # id is not given
+            args.append('')  # imply that id is not given, while still allowing
+                             # the error management to go from 1st arg to last
+        clsname = args[0]
+        id = args[1]
         cls = HBNBCommand.get_class(clsname)
         if cls is None:
+            return
+        if id == '':
+            print("** instance id missing **")
             return
 
         instance_found = False
