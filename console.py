@@ -122,6 +122,30 @@ Usage: update <class name> <id> <attribute name> "<attribute value>
         attr_name = args[2]
         attr_value = args[3]
 
+        cls = HBNBCommand.get_class(clsname)
+        if cls is None:
+            return
+        if id == '':
+            print("** class name missing **")
+            return
+        if attr_name == '':
+            print("** attribute name missing **")
+            return
+        if attr_value == '':
+            print("** attribute value missing **")
+            return
+
+        instance_found = False
+        for instance in storage.all().values():
+            if type(instance) == cls and instance.id == id:
+                setattr(instance, attr_name, attr_value)
+                instance.save()
+                instance_found = True
+                break
+        if not instance_found:
+            print("** no instance found **")
+        
+
         # WIP
 
     @staticmethod
@@ -141,15 +165,14 @@ Usage: destroy <class name> <id>
             return
 
         instance_found = False
-        for instance in storage.all():
+        for content, instance in storage.all().items():
             if type(instance) is cls and instance.id == id:
-                # delete instance from storage
+                del storage.all()[content]
                 instance_found = True
                 break
         if not instance_found:
             print("** no instance found **")
             return
-
         # WIP
 
     # ==================== data viewing commands ====================
