@@ -116,7 +116,10 @@ Usage: create <className>
     def do_update(argstr):
         """
 Update an instance by adding or changing an attribute.
-Usage: update <class name> <id> <attribute name> "<attribute value>
+The 'created_at' or 'updated_at' attributes cannot be modified.
+If the given attribute name doesn't exist, a new one will be created.
+Values with spaces must have double quotes around them. (todo: not implemented yet)
+Usage: update <class name> <id> <attribute name> <attribute value>
         """
         args = HBNBCommand.parse_args(argstr, 4)
         cls = HBNBCommand.get_class(args[0])
