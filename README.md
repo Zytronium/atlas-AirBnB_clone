@@ -97,35 +97,52 @@ unable to cancel currently running operation. Error 404^C^C^̴C̵^̴̥̺̥̫̆͋
 ### Commands
 
 - ?, help:
-  - Display a list of available commands, or show documentation for a specific command
+  - Displays a list of available commands, or show documentation for a specific command
   - Usage: (`<>` indicates an argument. Do not type the brackets.)
     - `help`
     - `?`
     - `help <command>`
     - `? <command>`
 - exit, quit, EOF (ctrl+d)
-  - Exit the command line interpreter.
+  - Exits the command line interpreter.
   - Usage:
     - `exit`
     - `quit`
     - `EOF`
     - `^d` (ctrl+d)
+- create
+  - Creates and saves an instance of className and prints the ID.
+  - Usage:
+    - `create <className>`
+- destroy
+  - Deletes the specified instance.
+  - Usage:
+    - `destroy <class name> <id>`
+- update
+  - Updates an instance by adding or changing an attribute.
+  - The 'created_at' or 'updated_at' attributes cannot be modified.
+  - If the given attribute name doesn't exist, a new one will be created.
+  - Usage:
+    - `update <class name> <id> <attribute name> <attribute value>`
+- all
+  - Prints the representations of all instances of the given class name
+  - Usage:
+    - `all <class name>`
+- show
+  - Prints the string representation of an instance based on the class name and id
+  - Usage:
+    - `show <class name> <id>`
 - rickroll
-  - rickroll the user by opening the video on their default browser.
+  - Rickroll the user by opening the video on their default browser.
   - *Might not work on Windows or WSL
   - Usage:
     - `rickroll`
 - selfdestruct
-  - activates a countdown from the specified number, or 5 if not given.
+  - Activates a countdown from the specified number, or 5 if not given.
   Exits the command line interpreter when the countdown reaches 0.
-    - Usage:
-      - `selfdestruct <number>`
-      - `selfdestruct`
-- placeholder
-  - Placeholder description
-  - not a real command
   - Usage:
-    - `rm -rf /* --no-preserve-root` (note: do not run this command ***EVER***)
+    - `selfdestruct <number>`
+    - `selfdestruct`
 
 Fun challenge: find the easter egg in the program.
 There's a hidden command that does something special.
