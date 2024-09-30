@@ -114,7 +114,8 @@ Usage: create <className>
 
     @staticmethod
     def do_update(argstr):
-        """WIP | will not work
+        """
+Update an instance by adding or changing an attribute.
 Usage: update <class name> <id> <attribute name> "<attribute value>
         """
         args = HBNBCommand.parse_args(argstr, 4)
@@ -138,6 +139,12 @@ Usage: update <class name> <id> <attribute name> "<attribute value>
         instance_found = False
         for instance in storage.all().values():
             if type(instance) is cls and instance.id == id:
+                if attr_name == "created_at" or attr_name == "updated_at":
+                    break  # todo: should it alert user not to update these?
+                           # updating them crashes it, but what if the user
+                           # needs to correct the created_at attribute?
+                           # should we implement a way to update it?
+                #  todo: maybe allow certain types to also convert from string?
                 setattr(instance, attr_name, attr_value)
                 instance.save()
                 instance_found = True
@@ -145,8 +152,6 @@ Usage: update <class name> <id> <attribute name> "<attribute value>
 
         if not instance_found:
             print("** no instance found **")
-
-        # todo: WIP
 
     @staticmethod
     def do_destroy(argstr):
