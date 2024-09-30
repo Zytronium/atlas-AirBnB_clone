@@ -37,7 +37,7 @@ class HBNBCommand(Cmd):
 
     def precmd(self, line):
         """
-        overrides the default method the runs between when the input is parsed
+        Overrides the default method the runs between when the input is parsed
         and when the command is run. This override resets the text color to
         undo the effect from adding \033[7m to the prompt, which reverses the
         background and foreground colors for the user input. This makes sure
@@ -51,7 +51,7 @@ class HBNBCommand(Cmd):
 
     def emptyline(self):
         """
-        overrides default method that runs when en empty command is run.
+        Overrides default method that runs when en empty command is run.
         Instead, it will do nothing when there is no command.
         """
         pass
@@ -102,14 +102,12 @@ Creates and saves an instance of className and prints the ID.
 className: name of the class of the new instance to be created
 Usage: create <className>
         """
-
         cls = HBNBCommand.get_class(clsname)
         if cls is None:
             return
 
         new_instance = cls()
-        """clay - changed this to new_instance.save()"""
-        new_instance.save() 
+        new_instance.save()  # clay - changed this to new_instance.save()
         print(new_instance.id)
 
     @staticmethod
@@ -118,12 +116,11 @@ Usage: create <className>
 Usage: update <class name> <id> <attribute name> "<attribute value>
         """
         args = HBNBCommand.parse_args(argstr, 4)
-        clsname = args[0]
+        cls = HBNBCommand.get_class(args[0])
         id = args[1]
         attr_name = args[2]
         attr_value = args[3]
 
-        cls = HBNBCommand.get_class(clsname)
         if cls is None:
             return
         if id == '':
@@ -147,22 +144,20 @@ Usage: update <class name> <id> <attribute name> "<attribute value>
         if not instance_found:
             print("** no instance found **")
 
+        # todo: WIP
 
-        # WIP
     @staticmethod
     def do_destroy(argstr):
-        """WIP | will not work
+        """
+Deletes the specified instance.
+className: name of the class of the instance to be deleted
+id: the id of the instance to be deleted
 Usage: destroy <class name> <id>
         """
         args = HBNBCommand.parse_args(argstr, 2)
-        clsname = args[0]
+        cls = HBNBCommand.get_class(args[0])
         id = args[1]
 
-        if clsname == '':
-            print("** class name missing **")
-            return
-
-        cls = HBNBCommand.get_class(clsname)
         if cls is None:
             return
         if id == '':
@@ -179,7 +174,6 @@ Usage: destroy <class name> <id>
         if not instance_found:
             print("** no instance found **")
             return
-        # WIP
 
     # ==================== data viewing commands ====================
 
@@ -191,11 +185,10 @@ Prints the string representation of an instance based on the class name and id
 Usage: show <class name> <id>
         """
         args = HBNBCommand.parse_args(argstr, 2)
-        clsname = HBNBCommand.get_class(args[0])
+        cls = HBNBCommand.get_class(args[0])
         id = args[1]
         
-        if clsname is None:
-            print("** class name missing **")
+        if cls is None:
             return
         if id == '':
             print("** instance id missing **")
@@ -203,7 +196,7 @@ Usage: show <class name> <id>
 
         instance_found = False
         for instance in storage.all().values():
-            if type(instance) is clsname and instance.id == id:
+            if type(instance) is cls and instance.id == id:
                 print(instance)
                 instance_found = True
                 break
@@ -221,6 +214,7 @@ Usage: all <class name>
         cls = HBNBCommand.get_class(clsname)
         if cls is None:
             return
+
         instances = []
         for instance in storage.all().values():
             if type(instance) is cls:
@@ -274,6 +268,14 @@ Usage: selfdestruct <number>
 
     @staticmethod
     def get_class(clsname):
+        """
+        Returns the class that matches the string given
+        (only if it inherits BaseModel). It also handles printing the correct
+        message if clsname is empty or the class was not found.
+        :param clsname: string that should exactly match the class name
+        :return: the class the matches the string, or none if either
+        clsname is an empty string, or there is no match.
+        """
         if clsname == "":
             print("** class name missing **")
             return None
@@ -299,7 +301,7 @@ Usage: selfdestruct <number>
     def parse_args(argstr, num_args = 3):
         """
         parse args by converting a string of args (argstr) into individual args
-        :param argstr: args string
+        :param argstr: string of arguments, separated by spaces.
         :param num_args: number of args to parse. 3 by default if left empty
         :return: a list of args
         """
