@@ -35,6 +35,8 @@ class HBNBCommand(Cmd):
         else:
             self.prompt = '(hbnb) '
 
+    # ==================== override cmd methods ====================
+
     def precmd(self, line):
         """
         Overrides the default method the runs between when the input is parsed
@@ -112,8 +114,12 @@ Usage: create <className>
 
     @staticmethod
     def do_update(argstr):
-        """WIP | will not work
-Usage: update <class name> <id> <attribute name> "<attribute value>
+        """
+Update an instance by adding or changing an attribute.
+The 'created_at' or 'updated_at' attributes cannot be modified.
+If the given attribute name doesn't exist, a new one will be created.
+Values with spaces must have double quotes around them. (todo: not implemented yet)
+Usage: update <class name> <id> <attribute name> <attribute value>
         """
         args = HBNBCommand.parse_args(argstr, 4)
         cls = HBNBCommand.get_class(args[0])
@@ -136,15 +142,32 @@ Usage: update <class name> <id> <attribute name> "<attribute value>
         instance_found = False
         for instance in storage.all().values():
             if type(instance) is cls and instance.id == id:
+                instance_found = True
+                if attr_name == "created_at" or attr_name == "updated_at":
+                    print("** cannot update that attribute **")
+                    break  # updating them crashes it, but what if the user
+                           # needs to correct the created_at attribute?
+                           # should we implement a way to update it?
+                # convert to an int, float, or bool if possible
+                try:
+                    if attr_value.isdigit():
+                        attr_value = int(attr_value)
+                    elif (attr_value.replace('.', '', 1).isdigit() and
+                          attr_value.count('.') == 1):
+                        attr_value = float(attr_value)
+                    elif attr_value == "True":
+                        attr_value = True
+                    elif attr_value == "False":
+                        attr_value = False
+                except ValueError:
+                    pass  # Leave as string if conversion fails
+                # updates the model and saves
                 setattr(instance, attr_name, attr_value)
                 instance.save()
-                instance_found = True
                 break
 
         if not instance_found:
             print("** no instance found **")
-
-        # todo: WIP
 
     @staticmethod
     def do_destroy(argstr):
@@ -176,7 +199,6 @@ Usage: destroy <class name> <id>
             return
 
     # ==================== data viewing commands ====================
-
 
     @staticmethod
     def do_show(argstr):
@@ -265,6 +287,8 @@ Usage: selfdestruct <number>
         print("The console has been obliterated. Goodbye.")
         reset_color()
         return True
+
+    # ======================= helper methods =======================
 
     @staticmethod
     def get_class(clsname):
