@@ -35,6 +35,8 @@ class HBNBCommand(Cmd):
         else:
             self.prompt = '(hbnb) '
 
+    # ==================== override cmd methods ====================
+
     def precmd(self, line):
         """
         Overrides the default method the runs between when the input is parsed
@@ -177,7 +179,6 @@ Usage: destroy <class name> <id>
 
     # ==================== data viewing commands ====================
 
-
     @staticmethod
     def do_show(argstr):
         """
@@ -265,6 +266,8 @@ Usage: selfdestruct <number>
         print("The console has been obliterated. Goodbye.")
         reset_color()
         return True
+
+    # ======================= helper methods =======================
 
     @staticmethod
     def get_class(clsname):
