@@ -4,13 +4,16 @@ This is the main module for running the command line interpreter,
 aka the console. Run this to run the command line interpreter. Read
 the readme for a list of commands and more detailed info.
 """
+import sys
 from sys import argv
+from os import isatty, getcwd
 try:
     import vlc
     sound = True
 except ImportError:
     argc = len(argv)
-    if not (argc > 1 and (argv[1] == '-i' or argv[1] == '--ignore-warnings')):
+    if not (argc > 1 and (argv[1] == '-i' or argv[1] == '--ignore-warnings')
+            and not isatty(sys.stdin.isatty())):
         print("Could not import vlc. Please install package 'vlc' "
               "to hear audio. 1 command uses sound.")
         print("One possible command to install vlc would be this command:")
@@ -20,10 +23,8 @@ except ImportError:
         print("The console will continue without sound. To run without this "
               "message, do './console.py -i' or './console.py --ignore-warnings'\n")
     sound = False
-import sys
 import webbrowser
 import os
-from os import isatty, getcwd
 from cmd import Cmd
 from time import sleep
 from models import storage
@@ -41,15 +42,13 @@ class HBNBCommand(Cmd):
     """
     the main command line interpreter class
     """
-    def __init__(self):
-        super().__init__()
-        if isatty(sys.stdin.isatty()):  # only sets intro in interactive
-            self.intro = ('Welcome to AirBnB Clone Console! Type '
-                          '"help" or "?" for a list of commands. Type '
-                          '"exit" or "quit" to exit.')
-            self.prompt = '(hbnb) \033[7m'  # reverses background & foreground
-        else:
-            self.prompt = '(hbnb) '
+    if isatty(sys.stdin.isatty()):  # only sets intro in interactive
+        intro = ('Welcome to AirBnB Clone Console! Type '
+                      '"help" or "?" for a list of commands. Type '
+                      '"exit" or "quit" to exit.')
+        prompt = '(hbnb) \033[7m'  # reverses background & foreground
+    else:
+        prompt = '(hbnb) '
 
     # ==================== override cmd methods ====================
 
