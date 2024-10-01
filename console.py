@@ -41,8 +41,6 @@ class HBNBCommand(Cmd):
     """
     the main command line interpreter class
     """
-    # sep = os.sep  # wip
-    # alarm = vlc.MediaPlayer(getcwd() + f'{sep}res{sep}alarm.m4a')
     def __init__(self):
         super().__init__()
         if isatty(sys.stdin.isatty()):  # only sets intro in interactive
@@ -269,8 +267,7 @@ Usage: all <class name>
         """Rickrolls you"""
         webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
-    @staticmethod
-    def do_selfdestruct(timer):
+    def do_selfdestruct(self, timer):
         """
 Activates self-destruct mode, which starts a countdown from the specified
 number, or 5 if not given. Exits the command line interpreter when
@@ -286,7 +283,7 @@ Usage: selfdestruct <number>
             return
 
         if sound:
-            pass  # wip
+            HBNBCommand.play_sound()
 
         set_color('red')
         set_color('bold')
@@ -356,6 +353,19 @@ Usage: selfdestruct <number>
             for i in range(add_args):
                 args.append('')
         return args
+
+    @staticmethod
+    def play_sound():
+        sep = os.sep
+        player = vlc.Instance()
+        media_list = player.media_list_new()
+        media_player = player.media_list_player_new()
+        alarm = player.media_new(getcwd() + f'{sep}res{sep}alarm.mp3')
+        media_list.add_media(alarm)
+        media_player.set_media_list(media_list)
+        player.vlm_set_loop(getcwd() + f'{sep}res{sep}alarm.mp3', True)
+        media_player.play()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
