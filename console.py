@@ -4,12 +4,28 @@ This is the main module for running the command line interpreter,
 aka the console. Run this to run the command line interpreter. Read
 the readme for a list of commands and more detailed info.
 """
+from sys import argv
+try:
+    import vlc
+    sound = True
+except ImportError:
+    argc = len(argv)
+    if not (argc > 1 and (argv[1] == '-i' or argv[1] == '--ignore-warnings')):
+        print("Could not import vlc. Please install package 'vlc' "
+              "to hear audio. 1 command uses sound.")
+        print("One possible command to install vlc would be this command:")
+        print("pip install vlc")
+        print("or, if that doesn't work, try:")
+        print("pip install python-vlc")
+        print("The console will continue without sound. To run without this "
+              "message, do './console.py -i' or './console.py --ignore-warnings'\n")
+    sound = False
 import sys
 import webbrowser
+import os
+from os import isatty, getcwd
 from cmd import Cmd
-from os import isatty
 from time import sleep
-
 from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -25,6 +41,8 @@ class HBNBCommand(Cmd):
     """
     the main command line interpreter class
     """
+    # sep = os.sep  # wip
+    # alarm = vlc.MediaPlayer(getcwd() + f'{sep}res{sep}alarm.m4a')
     def __init__(self):
         super().__init__()
         if isatty(sys.stdin.isatty()):  # only sets intro in interactive
@@ -266,6 +284,9 @@ Usage: selfdestruct <number>
         elif timer != '':
             print("Please specify a valid number, or leave blank.")
             return
+
+        if sound:
+            pass  # wip
 
         set_color('red')
         set_color('bold')
