@@ -360,10 +360,15 @@ Usage: selfdestruct <number>
         player = vlc.Instance()
         media_list = player.media_list_new()
         media_player = player.media_list_player_new()
-        alarm = player.media_new(getcwd() + f'{sep}res{sep}alarm.mp3')
+        alarm = player.media_new(os.getcwd() + f'{sep}res{sep}alarm.mp3')
         media_list.add_media(alarm)
         media_player.set_media_list(media_list)
-        player.vlm_set_loop(getcwd() + f'{sep}res{sep}alarm.mp3', True)
+
+        media_player.get_media_player().event_manager().event_attach(
+            vlc.EventType.MediaPlayerEndReached,
+            lambda event: HBNBCommand.play_sound()
+        )
+
         media_player.play()
 
 
