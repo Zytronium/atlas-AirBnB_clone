@@ -51,4 +51,3 @@ class FileStorage:
                             FileStorage.__objects[k] = obj
         except Exception as e:
             print(e)
-
