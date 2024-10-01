@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """The base_model module."""
-import models
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
     """base attributes for each instance"""
     def __init__(self, *args, **kwargs):
         """initialize the instance"""
- 
         format = '%Y-%m-%dT%H:%M:%S.%f'
         self.id = str(uuid.uuid4())
         self.created_at = datetime.today()
@@ -22,8 +21,8 @@ class BaseModel:
                     self.__dict__[nattr] = datetime.strptime(vattr, format)
                 else:
                     self.__dict__[nattr] = vattr                
-        else:
-            models.storage.new(self)
+        else:  # if it's a new instance (not from a dictionary representation)
+            storage.new(self)
             
     def __str__(self):
         """print the instance"""
@@ -33,7 +32,7 @@ class BaseModel:
     def save(self):
         """save the instance"""
         self.updated_at = datetime.today()
-        models.storage.save()
+        storage.save()
         
     def to_dict(self):
         """return a dictionary containing the instance"""

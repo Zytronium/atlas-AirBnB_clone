@@ -2,8 +2,6 @@
 """the FileStorage class."""
 import json
 import os
-from models.base_model import BaseModel
-
 
 
 class FileStorage:
@@ -17,7 +15,7 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self, obj):
-        """sdd a new object to the dictionary"""
+        """add a new object to the dictionary"""
         key = obj.id
         obj_name = obj.__class__.__name__
         FileStorage.__objects[f"{obj_name}.{key}"] = obj
@@ -47,4 +45,3 @@ class FileStorage:
         except Exception as e:
             print(e)
 
-                
