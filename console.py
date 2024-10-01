@@ -218,7 +218,7 @@ Usage: show <class name> <id>
 
         instance_found = False
         for instance in storage.all().values():
-            if type(instance) is cls and instance.id == id:
+            if isinstance(instance, cls) and instance.id == id:
                 print(instance)
                 instance_found = True
                 break
@@ -239,7 +239,7 @@ Usage: all <class name>
 
         instances = []
         for instance in storage.all().values():
-            if type(instance) is cls:
+            if isinstance(instance, cls):
                 instances.append(str(instance))
 
         print(instances)
