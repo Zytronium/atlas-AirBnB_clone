@@ -2,7 +2,7 @@
 """The base_model module."""
 import uuid
 from datetime import datetime
-from models import storage
+import models
 
 
 class BaseModel:
@@ -22,7 +22,7 @@ class BaseModel:
                 else:
                     self.__dict__[nattr] = vattr                
         else:  # if it's a new instance (not from a dictionary representation)
-            storage.new(self)
+            models.storage.new(self)
             
     def __str__(self):
         """print the instance"""
@@ -32,7 +32,7 @@ class BaseModel:
     def save(self):
         """save the instance"""
         self.updated_at = datetime.today()
-        storage.save()
+        models.storage.save()
         
     def to_dict(self):
         """return a dictionary containing the instance"""
