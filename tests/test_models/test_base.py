@@ -20,6 +20,9 @@ class TestBase(unittest.TestCase):
         self.assertEqual(obj_dict["my_number"], 98)
         self.assertEqual(isinstance(obj_dict["created_at"], datetime.datetime), True)
         self.assertEqual(isinstance(obj_dict["updated_at"], datetime.datetime), True)
+
+if __name__ == "__main__":
+    unittest.main()
     
     
     
