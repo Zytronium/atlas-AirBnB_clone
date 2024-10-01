@@ -17,9 +17,9 @@ dictum. Primis augue primis bibendum consequat sit penatibus et.
 ### How to start the console
 Because of certain restrictions, this console was designed for Python 3.8,*
 though it works on the latest Python 3.12 and most likely with 3.13 (whose
-release date is Oct 1st 2024). It is also recommended to use a terminal that
-supports the following text effects: colors, bold, concealed, reversed, and
-blinking.
+expected release date is Oct 7th 2024). It is also recommended to use a
+terminal that supports the following text effects: colors, bold, concealed,
+reversed, and blinking.
 
 To start the command interpreter, the best way to run it is by opening it in
 a terminal. Here are the most likely commands that are needed to run in the
@@ -74,8 +74,9 @@ Okay, maybe that doesn't work in Minecraft, but it could be recreated in
 Minecraft with some time and dedication.
 </details>
 
-*: Support for Python 3.8 will drop when 3.13 comes out on October 1st. It is
-therefore recommended to use 3.9 or later instead.
+*: Support for Python 3.8 will drop when 3.13 comes out sometime around October
+7th. It is therefore recommended to use 3.9 or later instead, if you are
+running it after that date.
 
 ---
 
