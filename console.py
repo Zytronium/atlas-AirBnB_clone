@@ -13,7 +13,7 @@ try:
 except ImportError:
     argc = len(argv)
     if (not (argc > 1 and (argv[1] == '-i' or argv[1] == '--ignore-warnings'))
-        and not isatty(sys.stdin.isatty())):
+        and isatty(sys.stdin.isatty())):
         print("Could not import vlc. Please install package 'vlc' "
               "to hear audio. 1 command uses sound.")
         print("One possible command to install vlc would be this command:")
