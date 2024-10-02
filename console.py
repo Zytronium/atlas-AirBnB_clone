@@ -27,7 +27,7 @@ import webbrowser
 import os
 from cmd import Cmd
 from time import sleep
-from models import storage
+from models import storage, setting_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -319,6 +319,49 @@ Usage: all <class name>
                 instances.append(str(instance))
 
         print(instances)
+
+    # ====================== console settings ======================
+
+    @staticmethod
+    def do_settings(argstr):
+        """
+Change console settings.
+Usages:
+settings <setting> <value> | change a setting's value
+settings <setting> | see a setting's current value
+settings | list all settings and their current values
+        """
+        setting_storage.reload()
+        args = HBNBCommand.parse_args(argstr, 2)
+
+        # for usage: 'settings': display all settings
+        if args[0] == '':
+            for key, value in setting_storage.all().items():
+                print(f"{key}: {value}")
+        # for usage: 'settings <setting>': display <setting>'s value
+        elif args[1] == '':
+            setting = args[0]
+            if setting in setting_storage.all():
+                print(f"{setting}: {setting_storage.all()[setting]}")
+            else:
+                print(f"** setting '{setting}' does not exist **")
+        # for usage: 'settings <setting> <value>': update given settings value
+        elif args[1] != '':
+            setting = args[0]
+            value = args[1]
+
+            # convert value to boolean
+            if value.lower() == "true":
+                value = True
+            elif value.lower() == "false":
+                value = False
+            elif value != '':
+                print("** please enter true or false **")
+                return
+
+            setting_storage.new(setting, value)
+            setting_storage.save()
+            print(f"Setting '{setting}' updated to {value}.")
 
     # ====================== misc fun commands ======================
 
