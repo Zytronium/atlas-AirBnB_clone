@@ -4,3 +4,8 @@
 # This goes for both authors' copy of the project. Add anything you want to be git ignored here.
 # Make sure it's deleted off of github before you add its name here, or it wont be ignored, at least not entirely.
 /file.json
+.replit
+3-main.py
+4-main.py
+5-main.py
+6-main.py
