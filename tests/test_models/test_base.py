@@ -1,4 +1,5 @@
 import unittest
+import uuid
 import datetime
 from models.base_model import BaseModel
 
@@ -30,7 +31,8 @@ class TestBaseModel(unittest.TestCase):
 
     def test_kwarg_init(self):
         """test kwargs that init uses"""
-        date_str = "2021-01-01T00:00:00.000000"
+        time = datetime.datetime.now()
+        id = str(uuid.uuid4()
         kwargs = {
             'id': '3489', 
             'created_at': date_str, 
