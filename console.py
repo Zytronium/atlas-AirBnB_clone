@@ -158,9 +158,9 @@ Usage: update <class name> <id> <attribute name> <attribute value>
         for instance in storage.all().values():
             if type(instance) is cls and instance.id == id:
                 instance_found = True
-                # if attr_name == "created_at" or attr_name == "updated_at":
-                #     print("** cannot update that attribute **")
-                #     break  # updating them crashes it, but what if the user
+                if attr_name == "created_at" or attr_name == "updated_at":
+                    print("** cannot update that attribute **")
+                    break  # updating them crashes it, but what if the user
                            # needs to correct the created_at attribute?
                            # should we implement a way to update it?
                 # convert to an int, float, or bool if possible
