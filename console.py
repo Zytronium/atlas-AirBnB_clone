@@ -158,11 +158,13 @@ Usage: update <class name> <id> <attribute name> <attribute value>
         for instance in storage.all().values():
             if type(instance) is cls and instance.id == id:
                 instance_found = True
-                # if attr_name == "created_at" or attr_name == "updated_at":
-                #     print("** cannot update that attribute **")
-                #     break  # updating them crashes it, but what if the user
-                           # needs to correct the created_at attribute?
-                           # should we implement a way to update it?
+                if (attr_name == "created_at" or attr_name == "updated_at" or
+                    attr_name == "id"):
+                    print("** cannot update that attribute **")
+                    break
+                    # Updating the dates crashes it, and updating id
+                    # sometimes causes weird and dangerous behavior.
+                    # Why would you need to update any of these anyway?
                 # convert to an int, float, or bool if possible
                 try:
                     if attr_value.isdigit():
@@ -176,6 +178,7 @@ Usage: update <class name> <id> <attribute name> <attribute value>
                         attr_value = False
                 except ValueError:
                     pass  # Leave as string if conversion fails
+
                 # updates the model and saves
                 setattr(instance, attr_name, attr_value)
                 instance.save()
@@ -224,7 +227,7 @@ Usage: show <class name> <id>
         args = HBNBCommand.parse_args(argstr, 2)
         cls = HBNBCommand.get_class(args[0])
         id = args[1]
-        
+
         if cls is None:
             return
         if id == '':
