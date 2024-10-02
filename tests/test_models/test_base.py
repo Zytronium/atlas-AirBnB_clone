@@ -1,23 +1,15 @@
 #!/usr/bin/python3
-import unittest, models, datetime
+import unittest
+import datetime
 from uuid import uuid4
 from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
+
 """test module for the BaseModel class"""
 
 
 class TestBaseModel(unittest.TestCase):
     """test class for the BaseModel class"""
 
-    def setUp(self):
-        """setup the test class"""
-        self.storage = FileStorage
-        class_file = 'file.json'
-
-    @classmethod
-    def teardown(cls):
-        """teardown the test class"""
-        cls.self.storage.all.clear()
         
     def test_to_dict(self):
         """test to_dict method"""
@@ -25,8 +17,10 @@ class TestBaseModel(unittest.TestCase):
         dict = my_model.to_dict()
         self.assertEqual(dict['__class__'], 'BaseModel')
         self.assertEqual(dict['id' ], str(uuid4()))
-        self.assertEqual(dict['created_at'], datetime.datetime.today().isoformat())
-        self.assertEqual(dict['updated_at'], datetime.datetime.today().isoformat())
+        self.assertEqual(dict['created_at'],
+                         datetime.datetime.today().isoformat())
+        self.assertEqual(dict['updated_at'],
+                         datetime.datetime.today().isoformat())
 
     
     def test_save(self):
@@ -45,8 +39,15 @@ class TestBaseModel(unittest.TestCase):
 
     def test_kwarg_init(self):
         """test kwargs that init uses"""
-        date = "1971-01-01T00:00:00.000000"
-        split = {'user': '3489', 'created_at': date, 'updated_at': date}
+        self.date = "1971-01-01T00:00:00.000000"
+        self.split = {
+            'user': '3489', 'created_at': self.date, 'updated_at': self.date}
+        base = BaseModel(**self.split)
+        self.assertEqual(base.id, '3489')
+        self.assertEqual(base.created_at.isoformat(
+            timespec='seconds'), self.date)
+        
+        
 
 
 
@@ -66,11 +67,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(my_model.updated_at, datetime.datetime)
         self.assertGreater(my_model.created_at, my_model.updated_at)
         self.assertNotEqual(my_model.created_at, my_model.updated_at)
-
-    def (self):
-        """test the datetime attributes"""
-
-        pass
 
 
 if __name__ == "__main__":
