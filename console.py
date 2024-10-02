@@ -133,10 +133,10 @@ Usage: create <className>
 Update an instance by adding or changing an attribute.
 The 'created_at' or 'updated_at' attributes cannot be modified.
 If the given attribute name doesn't exist, a new one will be created.
-Values with spaces must have double quotes around them. (todo: not implemented yet)
+Strings with spaces must have double quotes around them unless its a list.
 Usage: update <class name> <id> <attribute name> <attribute value>
         """
-        args = HBNBCommand.parse_args(argstr, 4)
+        args = HBNBCommand.parse_args(argstr, len(argstr.split(' ')))
         cls = HBNBCommand.get_class(args[0])
         id = args[1]
         attr_name = args[2]
@@ -165,13 +165,52 @@ Usage: update <class name> <id> <attribute name> <attribute value>
                     # Updating the dates crashes it, and updating id
                     # sometimes causes weird and dangerous behavior.
                     # Why would you need to update any of these anyway?
-                # convert to an int, float, or bool if possible
+
+                # convert to an int, float, bool, list, or string with spaces,
+                # if possible
+
+                # allow of a list with spaces
                 if attr_value[0] == '[':
-                    pass
-                    # allow spaces
+                    arg_num = 3  # args[3] is attr_value's first word. This
+                    # gets incremented for each word to help keep track of
+                    # which arg from args we are at.
+                    while len(args) - 1 > arg_num and args[arg_num][-1] != ']':
+                        # Note that if there is a list within a list
+                        # ([1, 2, [3, 4], 5]), then this arg will still
+                        # be terminated at the first ']' char. However,
+                        # it is unlikely this will ever be a problem outside
+                        # of testing, and it is a somewhat complicated fix.
+
+                        # increment to next word in the arg
+                        arg_num += 1
+
+                        # add a space and the next word
+                        attr_value += ' ' + args[arg_num]
+
+                    # if there is no closing bracket, treat it like the first
+                    # arg is a string, terminated by the first space.
+                    if attr_value[-1] != ']':
+                        attr_value = args[3]
+
+                # allow for a string with spaces
                 if attr_value[0] == '"':
-                    pass
-                    # allow spaces
+                    arg_num = 3  # args[3] is attr_value's first word. This
+                    # gets incremented for each word to help keep track of
+                    # which arg from args we are at.
+                    while len(args) - 1 > arg_num and args[arg_num][-1] != '"':
+                        # note that \" will simply end the string with a \
+                        # rather than adding a "
+
+                        # increment to next word in the arg
+                        arg_num += 1
+
+                        # add a space and the next word
+                        attr_value += ' ' + args[arg_num]
+
+                    # if there is no closing double-quote, treat it like the
+                    # first arg is the string, terminated by the first space.
+                    if attr_value[-1] != '"':
+                        attr_value = args[3]
                 try:
                     if attr_value.isdigit():
                         attr_value = int(attr_value)
@@ -181,12 +220,24 @@ Usage: update <class name> <id> <attribute name> <attribute value>
                     elif attr_value == "True" or attr_value == "False":
                         attr_value = eval(attr_value)
                     elif attr_value[0] == '[' and attr_value[-1] == ']':
-                        attr_value = eval(attr_value)
+                        try:
+                            attr_value = eval(attr_value)  # note:NEVER do this
+                        except SyntaxError:
+                            print("** incorrect syntax for a list **")
+                            return
+                        # in a serious project. Because it uses eval(),
+                        # the user can execute code using this. This is VERY
+                        # DANGEROUS! However, it works for this limited
+                        # demonstration.
+
+                    # remove the surrounding double quotes from a string
+                    elif attr_value[0] == '"' and attr_value[-1] == ']':
+                        attr_value = attr_value[1:-1]
 
                 except ValueError:
                     pass  # Leave as string if conversion fails
 
-                # updates the model and saves
+                # update the model and save
                 setattr(instance, attr_name, attr_value)
                 instance.save()
                 break
