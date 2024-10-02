@@ -133,7 +133,7 @@ Usage: create <className>
 Update an instance by adding or changing an attribute.
 The 'created_at' or 'updated_at' attributes cannot be modified.
 If the given attribute name doesn't exist, a new one will be created.
-Strings with spaces must have double quotes around them unless its a list.
+Strings with spaces must have double quotes. (Lists with spaces do not)
 Usage: update <class name> <id> <attribute name> <attribute value>
         """
         args = HBNBCommand.parse_args(argstr, len(argstr.split(' ')))
