@@ -5,7 +5,14 @@ from models.base_model import BaseModel
 
 class City(BaseModel):
     """inherites from BaseModel"""
-    def __init__(self):
-        super().__init__()
-        self.name = ""
-        self.state_id = ""
+    name = ""
+    state_id = ""
+    def __init__(self, *args, **kwargs):
+        if kwargs:
+            super().__init__(*args, **kwargs)
+            self.name = kwargs.get("name")
+            self.state_id = kwargs.get("state_id")
+        else:
+            super().__init__()
+            self.name = ""
+            self.state_id = ""
