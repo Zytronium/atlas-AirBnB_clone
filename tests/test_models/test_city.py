@@ -12,8 +12,8 @@ class TestCity(unittest.TestCase):
       """test for __init__"""
 
       my_city = City()
-      self.assertEqual(my_city.id, "")
       self.assertEqual(my_city.name, "")
+      self.assertEqual(my_city.state_id, "")
 
 if __name__ == "__main__":
   unittest.main()
