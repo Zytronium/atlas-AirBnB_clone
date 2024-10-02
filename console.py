@@ -10,7 +10,7 @@ from os import isatty, getcwd
 from models import storage, setting_storage
 try:
     import vlc
-    sound = setting_storage.all()['sound']
+    sound = True
 except ImportError:
     argc = len(argv)
     if (not (argc > 1 and (argv[1] == '-i' or argv[1] == '--ignore-warnings'))
@@ -44,6 +44,7 @@ class HBNBCommand(Cmd):
     """
     the main command line interpreter class
     """
+    sound = sound
     if isatty(sys.stdin.isatty()):  # only sets intro in interactive
         intro = ('Welcome to AirBnB Clone Console! Type '
                       '"help" or "?" for a list of commands. Type '
@@ -324,8 +325,7 @@ Usage: all <class name>
 
     # ====================== console settings ======================
 
-    @staticmethod
-    def do_settings(argstr):
+    def do_settings(self, argstr):
         """
 Change console settings.
 Usages:
@@ -387,7 +387,7 @@ Usage: selfdestruct <number>
             print("Please specify a valid number, or leave blank.")
             return
 
-        if sound:
+        if sound and setting_storage.all()['sound']:
             HBNBCommand.play_sound()
 
         set_color('red')
