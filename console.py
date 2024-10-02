@@ -136,7 +136,7 @@ If the given attribute name doesn't exist, a new one will be created.
 Strings with spaces must have double quotes. (Lists with spaces do not)
 Usage: update <class name> <id> <attribute name> <attribute value>
         """
-        args = HBNBCommand.parse_args(argstr, len(argstr.split(' ')))
+        args = HBNBCommand.parse_args(argstr, max(4, len(argstr.split(' '))))
         cls = HBNBCommand.get_class(args[0])
         id = args[1]
         attr_name = args[2]
