@@ -1,17 +1,24 @@
 # AirBnB Clone Console
 
 ---
-###### Description of the project
-Lorem ipsum odor amet, consectetuer adipiscing elit. Penatibus sed class
-velit sed fames consectetur sapien eu. Ante quis ad malesuada risus a euismod
-ipsum. Lorem turpis massa metus ad tellus quisque etiam mauris. Curabitur
-proin odio ligula massa habitasse sagittis nam.
+AirBnB Clone is exactly what it sounds like, or at least based on it. It is
+based on a console for AirBnB. With it, you can create, update, and delete
+instances of Users, Cities, Places, Amenities, Reviews, etc.  
 
-###### Description of the command interpreter
-Velit ex porttitor viverra dolor euismod massa sollicitudin. Posuere placerat
-netus dolor massa conubia platea. Ex cubilia mi fusce semper pharetra dapibus
-dictum. Primis augue primis bibendum consequat sit penatibus et.
-
+The console is a command line interpreter. In it, you can execute specially
+built commands to interact with the AirBnB (clone) database. It also contains a
+few custom commands unrelated to the database, just for fun. One command even
+has a sound effect, and you will have to have the vlc or python-vlc package
+installed. If you have pip installed, the most likely methods to install it are:
+```bash
+pip install vlc
+```
+```bash
+pip install python-vlc
+```   
+Installing vlc is not required to run it, and you can continue without sound.
+Run with the additional program argument "-i" or "--ignore-warnings" to ignore
+the warning printed on startup when vlc is not installed.
 ---
 
 ### How to start the console
@@ -46,9 +53,12 @@ python ./console.py
 <details>
 <summary>MacOS</summary>
 
-*This is a placeholder command. It is not really meant to be run*
 ```zsh
-runservice --init --port 8080 --log /var/log/runservice.log
+./console.py
+```
+or 
+```zsh
+python3 console.py
 ```
 </details>
 
@@ -81,19 +91,96 @@ running it after that date.
 ---
 
 ### How to use it
-Nullam eget adipiscing porttitor nisi dapibus neque a. Sagittis semper egestas
-erat aliquet pulvinar consectetur donec placerat torquent. Dui aenean eget
-sapien arcu bibendum platea eu. Enim ultricies potenti mattis posuere fames
-per. Et magnis dolor magna nulla vitae himenaeos aenean facilisis. Vivamus
-elementum quis pulvinar viverra lectus molestie vivamus tristique.
+To use the console, you can enter commands to interact with the database.
+For example, `create User` will create a new user and print out its ID so
+that you can keep track of it. `show User` will show its details. Type
+`help` or `?` for a list of commands. Type `help` or `?` followed by a command
+name to see what the command does. type `exit`, `quit`, or send EOF signal
+(usually ctrl+d) to exit the console. Below are some example usages and a list
+of every command and what it does.
 
-### Examples
+### Example usage
+
+<details>
+<summary>See Example Output</summary>
+
 ```
-username@windows:~/atlas-airbnb_clone$ test output placeholder cmd
+Welcome to AirBnB Clone Console! Type "help" or "?" for a list of commands. Type "exit" or "quit" to exit.
+(hbnb) ? help
+List available commands with "help" or detailed help with "help cmd".
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  create   exit  quit      selfdestruct  update
+all  destroy  help  rickroll  show        
+
+(hbnb) ?
+
+Documented commands (type help <topic>):
+========================================
+EOF  create   exit  quit      selfdestruct  update
+all  destroy  help  rickroll  show        
+
+(hbnb) help exit
+Exit the program.
+(hbnb) help EOF
+EOF signal (usually ctl+d) will run this to exit the program.
+(hbnb) help all
+
+Prints the representations of all instances of the given class name
+Usage: all <class name>
+        
+(hbnb) all BaseModel
+[]
+(hbnb) create User
+62d68c37-8159-4c89-b13c-1cc5206e2601
+(hbnb) all User
+["[User] (62d68c37-8159-4c89-b13c-1cc5206e2601) {'id': '62d68c37-8159-4c89-b13c-1cc5206e2601', 'created_at': datetime.datetime(2024, 10, 1, 22, 35, 57, 205153), 'updated_at': datetime.datetime(2024, 10, 1, 22, 35, 57, 205219), 'email': '', 'password': '', 'first_name': '', 'last_name': ''}"]
+(hbnb) create Place
+c2f58d25-bc59-42ad-a442-3f516673bfcf
+(hbnb) all BaseModel
+["[User] (62d68c37-8159-4c89-b13c-1cc5206e2601) {'id': '62d68c37-8159-4c89-b13c-1cc5206e2601', 'created_at': datetime.datetime(2024, 10, 1, 22, 35, 57, 205153), 'updated_at': datetime.datetime(2024, 10, 1, 22, 35, 57, 205219), 'email': '', 'password': '', 'first_name': '', 'last_name': ''}", "[Place] (c2f58d25-bc59-42ad-a442-3f516673bfcf) {'id': 'c2f58d25-bc59-42ad-a442-3f516673bfcf', 'created_at': datetime.datetime(2024, 10, 1, 22, 36, 5, 450135), 'updated_at': datetime.datetime(2024, 10, 1, 22, 36, 5, 450212), 'city_id': '', 'user_id': '', 'name': '', 'description': '', 'number_rooms': 0, 'number_bathrooms': 0, 'max_guest': 0, 'price_by_night': 0, 'latitude': 0.0, 'longitude': 0.0, 'amenities': []}"]
+(hbnb) all Place
+["[Place] (c2f58d25-bc59-42ad-a442-3f516673bfcf) {'id': 'c2f58d25-bc59-42ad-a442-3f516673bfcf', 'created_at': datetime.datetime(2024, 10, 1, 22, 36, 5, 450135), 'updated_at': datetime.datetime(2024, 10, 1, 22, 36, 5, 450212), 'city_id': '', 'user_id': '', 'name': '', 'description': '', 'number_rooms': 0, 'number_bathrooms': 0, 'max_guest': 0, 'price_by_night': 0, 'latitude': 0.0, 'longitude': 0.0, 'amenities': []}"]
+(hbnb) show Place 62d68c37-8159-4c89-b13c-1cc5206e2601
+** no instance found **
+(hbnb) show User 62d68c37-8159-4c89-b13c-1cc5206e2601
+[User] (62d68c37-8159-4c89-b13c-1cc5206e2601) {'id': '62d68c37-8159-4c89-b13c-1cc5206e2601', 'created_at': datetime.datetime(2024, 10, 1, 22, 35, 57, 205153), 'updated_at': datetime.datetime(2024, 10, 1, 22, 35, 57, 205219), 'email': '', 'password': '', 'first_name': '', 'last_name': ''}
+(hbnb) help update
+
+Update an instance by adding or changing an attribute.
+The 'created_at' or 'updated_at' attributes cannot be modified.
+If the given attribute name doesn't exist, a new one will be created.
+Strings with spaces must have double quotes. (Lists with spaces do not)
+Usage: update <class name> <id> <attribute name> <attribute value>
+        
+(hbnb) update User 62d68c37-8159-4c89-b13c-1cc5206e2601 first_name Joe
+(hbnb) update User 62d68c37-8159-4c89-b13c-1cc5206e2601 last_name Mama
+(hbnb) update User 62d68c37-8159-4c89-b13c-1cc5206e2601 nickname "Jomama Jobama"
+(hbnb) update User 62d68c37-8159-4c89-b13c-1cc5206e2601 fav_songs ['never gonna give you up', 'rub some bacon on it', 'complete silence', True, 28, 'random data', -0.2, attr_name]
+(hbnb) show User 62d68c37-8159-4c89-b13c-1cc5206e2601
+[User] (62d68c37-8159-4c89-b13c-1cc5206e2601) {'id': '62d68c37-8159-4c89-b13c-1cc5206e2601', 'created_at': datetime.datetime(2024, 10, 1, 22, 35, 57, 205153), 'updated_at': datetime.datetime(2024, 10, 1, 22, 38, 25, 986322), 'email': '', 'password': '', 'first_name': 'Joe', 'last_name': 'Mama', 'nickname': '"Jomama Jobama"', 'fav_songs': ['never gonna give you up', 'rub some bacon on it', 'complete silence', True, 28, 'random data', -0.2, 'fav_songs']}
+(hbnb) exit
+SmartFridge@fedora:~/PycharmProjects/atlas-airbnb_clone$ ./console.py 
+Place.__init__() got an unexpected keyword argument 'id'
+Welcome to AirBnB Clone Console! Type "help" or "?" for a list of commands. Type "exit" or "quit" to exit.
+(hbnb) show User 62d68c37-8159-4c89-b13c-1cc5206e2601
+[User] (62d68c37-8159-4c89-b13c-1cc5206e2601) {'id': '62d68c37-8159-4c89-b13c-1cc5206e2601', 'created_at': datetime.datetime(2024, 10, 1, 22, 35, 57, 205153), 'updated_at': datetime.datetime(2024, 10, 1, 22, 38, 25, 986322), 'email': '', 'password': '', 'first_name': '', 'last_name': '', 'nickname': '"Jomama Jobama"', 'fav_songs': ['never gonna give you up', 'rub some bacon on it', 'complete silence', True, 28, 'random data', -0.2, 'fav_songs']}
+(hbnb) destroy User 62d68c37-8159-4c89-b13c-1cc5206e2601
+(hbnb) all User
+[]
+(hbnb) show User 62d68c37-8159-4c89-b13c-1cc5206e2601
+** no instance found **
+(hbnb) quit
+username@windows:~/atlas-airbnb_clone$ ./virus.exe
 deleting system32...
 ^C^C
 unable to cancel currently running operation. Error 404^C^C^̴C̵^̴̥̺̥̫̱̞̆͋C̴̬̺̐̓́̎͆͝^̸͎̙́̒͌̑͗̉̋̍͂͝Ç̴̼͔͉̻͎͚͔͕̗̤̯̝͇̗͌͛̀͋̄̄ͅ 
 ```
+Sorry for the inconvenience, we'll be back with more examples after sorting
+out some technical difficulties...
+</details>
 
 ### Commands
 
