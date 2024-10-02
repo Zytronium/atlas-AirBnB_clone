@@ -7,13 +7,14 @@ the readme for a list of commands and more detailed info.
 import sys
 from sys import argv
 from os import isatty, getcwd
+from models import storage, setting_storage
 try:
     import vlc
     sound = True
 except ImportError:
     argc = len(argv)
     if (not (argc > 1 and (argv[1] == '-i' or argv[1] == '--ignore-warnings'))
-        and isatty(sys.stdin.isatty())):
+        and isatty(sys.stdin.isatty()) and setting_storage.all()['show_warnings']):
         print("Could not import vlc. Please install package 'vlc' "
               "to hear audio. 1 command uses sound.")
         print("One possible command to install vlc would be this command:")
@@ -21,13 +22,14 @@ except ImportError:
         print("or, if that doesn't work, try:")
         print("pip install python-vlc")
         print("The console will continue without sound. To run without this "
-              "message, do './console.py -i' or './console.py --ignore-warnings'\n")
+              "message, do './console.py -i' or './console.py --ignore-warnings'"
+              " or, in this console, do 'settings show_warnings false' to "
+              "never show this message again.\n")
     sound = False
 import webbrowser
 import os
 from cmd import Cmd
 from time import sleep
-from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -42,6 +44,7 @@ class HBNBCommand(Cmd):
     """
     the main command line interpreter class
     """
+    sound = sound
     if isatty(sys.stdin.isatty()):  # only sets intro in interactive
         intro = ('Welcome to AirBnB Clone Console! Type '
                       '"help" or "?" for a list of commands. Type '
@@ -320,6 +323,48 @@ Usage: all <class name>
 
         print(instances)
 
+    # ====================== console settings ======================
+
+    def do_settings(self, argstr):
+        """
+Change console settings.
+Usages:
+settings <setting> <value> | change a setting's value
+settings <setting> | see a setting's current value
+settings | list all settings and their current values
+        """
+        setting_storage.reload()
+        args = HBNBCommand.parse_args(argstr, 2)
+
+        # for usage: 'settings': display all settings
+        if args[0] == '':
+            for key, value in setting_storage.all().items():
+                print(f"{key}: {value}")
+        # for usage: 'settings <setting>': display <setting>'s value
+        elif args[1] == '':
+            setting = args[0]
+            if setting in setting_storage.all():
+                print(f"{setting}: {setting_storage.all()[setting]}")
+            else:
+                print(f"** setting '{setting}' does not exist **")
+        # for usage: 'settings <setting> <value>': update given settings value
+        elif args[1] != '':
+            setting = args[0]
+            value = args[1]
+
+            # convert value to boolean
+            if value.lower() == "true":
+                value = True
+            elif value.lower() == "false":
+                value = False
+            elif value != '':
+                print("** please enter true or false **")
+                return
+
+            setting_storage.new(setting, value)
+            setting_storage.save()
+            print(f"Setting '{setting}' updated to {value}.")
+
     # ====================== misc fun commands ======================
 
     @staticmethod
@@ -342,7 +387,7 @@ Usage: selfdestruct <number>
             print("Please specify a valid number, or leave blank.")
             return
 
-        if sound:
+        if sound and setting_storage.all()['sound']:
             HBNBCommand.play_sound()
 
         set_color('red')

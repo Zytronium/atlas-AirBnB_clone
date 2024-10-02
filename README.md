@@ -220,6 +220,12 @@ out some technical difficulties...
   - Prints the string representation of an instance based on the class name and id
   - Usage:
     - `show <class name> <id>`
+- settings
+  - Change console settings.
+  - Usage:
+    - `settings <setting> <value>` | change a setting's value
+    - `settings <setting>` | see a setting's current value
+    - `settings` | list all settings and their current values
 - rickroll
   - Rickroll the user by opening the video on their default browser.
   - *Might not work on Windows or WSL
