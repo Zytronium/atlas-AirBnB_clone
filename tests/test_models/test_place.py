@@ -15,3 +15,6 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(Place.description, "")
         self.assertEqual(Place.number_rooms, 0)
         self.assertEqual(Place.number_bathrooms, 0)
+
+if __name__ == "__main__":
+  unittest.main()
