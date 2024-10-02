@@ -7,13 +7,14 @@ the readme for a list of commands and more detailed info.
 import sys
 from sys import argv
 from os import isatty, getcwd
+from models import storage, setting_storage
 try:
     import vlc
-    sound = True
+    sound = setting_storage.all()['sound']
 except ImportError:
     argc = len(argv)
     if (not (argc > 1 and (argv[1] == '-i' or argv[1] == '--ignore-warnings'))
-        and isatty(sys.stdin.isatty())):
+        and isatty(sys.stdin.isatty()) and setting_storage.all()['show_warnings']):
         print("Could not import vlc. Please install package 'vlc' "
               "to hear audio. 1 command uses sound.")
         print("One possible command to install vlc would be this command:")
@@ -21,13 +22,14 @@ except ImportError:
         print("or, if that doesn't work, try:")
         print("pip install python-vlc")
         print("The console will continue without sound. To run without this "
-              "message, do './console.py -i' or './console.py --ignore-warnings'\n")
+              "message, do './console.py -i' or './console.py --ignore-warnings'"
+              " or, in this console, do 'settings show_warnings false' to "
+              "never show this message again.\n")
     sound = False
 import webbrowser
 import os
 from cmd import Cmd
 from time import sleep
-from models import storage, setting_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
