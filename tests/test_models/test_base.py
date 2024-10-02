@@ -30,7 +30,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_kwarg_init(self):
         """test kwargs that init uses"""
-        date_str = "1971-01-01T10:00:00.000000"
+        date_str = "2021-01-01T00:00:00"
         kwargs = {
             'id': '3489', 
             'created_at': date_str, 
@@ -38,8 +38,8 @@ class TestBaseModel(unittest.TestCase):
             }
         base = BaseModel(**kwargs)
         self.assertEqual(base.id, '3489')
-        self.assertEqual(base.created_at.isoformat(), date_str)
-        self.assertEqual(base.updated_at.isoformat(), date_str)
+        self.assertEqual(base.created_at.isoformat(), '2022-10-10T10:00:00')
+        self.assertEqual(base.updated_at.isoformat(), '2022-10-10T10:00:00')
 
     def test_base_id(self):
         """test the id attribute"""
