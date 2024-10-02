@@ -159,7 +159,7 @@ Usage: update <class name> <id> <attribute name> <attribute value>
             if type(instance) is cls and instance.id == id:
                 instance_found = True
                 if (attr_name == "created_at" or attr_name == "updated_at" or
-                    attr_value == "id"):
+                    attr_name == "id"):
                     print("** cannot update that attribute **")
                     break
                     # Updating the dates crashes it, and updating id
@@ -227,7 +227,7 @@ Usage: show <class name> <id>
         args = HBNBCommand.parse_args(argstr, 2)
         cls = HBNBCommand.get_class(args[0])
         id = args[1]
-        
+
         if cls is None:
             return
         if id == '':
