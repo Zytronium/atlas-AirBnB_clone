@@ -31,7 +31,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_kwarg_init(self):
         """test kwargs that init uses"""
-        date_str = "1971-01-01T00:00:00.000000"
+        date_str = "1971-01-01T00:00:00"
         kwargs = {
             'id': '3489', 
             'created_at': date_str, 
