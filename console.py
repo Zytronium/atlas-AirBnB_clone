@@ -166,16 +166,23 @@ Usage: update <class name> <id> <attribute name> <attribute value>
                     # sometimes causes weird and dangerous behavior.
                     # Why would you need to update any of these anyway?
                 # convert to an int, float, or bool if possible
+                if attr_value[0] == '[':
+                    pass
+                    # allow spaces
+                if attr_value[0] == '"':
+                    pass
+                    # allow spaces
                 try:
                     if attr_value.isdigit():
                         attr_value = int(attr_value)
                     elif (attr_value.replace('.', '', 1).isdigit() and
                           attr_value.count('.') == 1):
                         attr_value = float(attr_value)
-                    elif attr_value == "True":
-                        attr_value = True
-                    elif attr_value == "False":
-                        attr_value = False
+                    elif attr_value == "True" or attr_value == "False":
+                        attr_value = eval(attr_value)
+                    elif attr_value[0] == '[' and attr_value[-1] == ']':
+                        attr_value = eval(attr_value)
+
                 except ValueError:
                     pass  # Leave as string if conversion fails
 
