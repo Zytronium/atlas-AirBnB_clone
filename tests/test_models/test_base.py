@@ -1,6 +1,6 @@
 import unittest
-import uuid
-import datetime
+from uuid import uuid4
+from datetime import datetime
 from models.base_model import BaseModel
 
 class TestBaseModel(unittest.TestCase):
@@ -29,19 +29,14 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(str(base), "[BaseModel] ({}) {}".format(
                 base.id, base.__dict__))
 
-    def test_kwarg_init(self):
-        """test kwargs that init uses"""
-        time = datetime.datetime.now()
-        id = str(uuid.uuid4()
-        kwargs = {
-            'id': '3489', 
-            'created_at': date_str, 
-            'updated_at': date_str
-            }
+    def test_base__init__kwargs(self):
+        time = datetime.now().isoformat()
+        base_id = str(uuid4())
+        kwargs = {'id': base_id, 'created_at': time, 'updated_at': time}
         base = BaseModel(**kwargs)
-        self.assertEqual(base.id, '3489')
-        self.assertEqual(base.created_at.isoformat(), date_str)
-        self.assertEqual(base.updated_at.isoformat(), date_str)
+        self.assertEqual(base.id, base_id)
+        self.assertEqual(base.created_at.isoformat(), time)
+        self.assertEqual(base.updated_at.isoformat(), time)
 
     def test_base_id(self):
         """test the id attribute"""
@@ -54,8 +49,8 @@ class TestBaseModel(unittest.TestCase):
         my_model = BaseModel()
         self.assertIsInstance(my_model.id, str)
         self.assertEqual(my_model.__class__.__name__, "BaseModel")
-        self.assertIsInstance(my_model.created_at, datetime.datetime)
-        self.assertIsInstance(my_model.updated_at, datetime.datetime)
+        self.assertIsInstance(my_model.created_at, datetime)
+        self.assertIsInstance(my_model.updated_at, datetime)
         self.assertLessEqual(my_model.created_at, my_model.updated_at)
 
 
