@@ -1,8 +1,0 @@
-modules = ["python-3.8"]
-run = "python 3-main.py"
-
-[nix]
-channel = "stable-24_05"
-
-[deployment]
-run = ["sh", "-c", "python 3-main.py"]
