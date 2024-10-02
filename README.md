@@ -1,17 +1,27 @@
 # AirBnB Clone Console
 
 ---
-###### Description of the project
-Lorem ipsum odor amet, consectetuer adipiscing elit. Penatibus sed class
-velit sed fames consectetur sapien eu. Ante quis ad malesuada risus a euismod
-ipsum. Lorem turpis massa metus ad tellus quisque etiam mauris. Curabitur
-proin odio ligula massa habitasse sagittis nam.
+AirBnB Clone is exactly what it sounds like, or at least based on it. It is
+based on a console for AirBnB. With it, you can create, update, and delete
+instances of Users, Cities, Places, Amenities, Reviews, etc.  
 
-###### Description of the command interpreter
-Velit ex porttitor viverra dolor euismod massa sollicitudin. Posuere placerat
-netus dolor massa conubia platea. Ex cubilia mi fusce semper pharetra dapibus
-dictum. Primis augue primis bibendum consequat sit penatibus et.
-
+The console is a command line interpreter. In it, you can execute specially
+built commands to interact with the AirBnB (clone) database. It also contains a
+few custom commands unrelated to the database, just for fun. One command even
+has a sound effect, and you will have to have the vlc or python-vlc package
+installed. If you have pip installed, the most likely methods to install it are:
+```bash
+pip install vlc
+```
+```bash
+pip install python-vlc
+```
+```bash
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && sudo python get-pip.py
+```
+Installing vlc is not required to run it, and you can continue without sound.
+Run with the additional program argument "-i" or "--ignore-warnings" to ignore
+the warning printed on startup when vlc is not installed.
 ---
 
 ### How to start the console
@@ -46,9 +56,12 @@ python ./console.py
 <details>
 <summary>MacOS</summary>
 
-*This is a placeholder command. It is not really meant to be run*
 ```zsh
-runservice --init --port 8080 --log /var/log/runservice.log
+./console.py
+```
+or 
+```zsh
+python3 console.py
 ```
 </details>
 
@@ -81,11 +94,13 @@ running it after that date.
 ---
 
 ### How to use it
-Nullam eget adipiscing porttitor nisi dapibus neque a. Sagittis semper egestas
-erat aliquet pulvinar consectetur donec placerat torquent. Dui aenean eget
-sapien arcu bibendum platea eu. Enim ultricies potenti mattis posuere fames
-per. Et magnis dolor magna nulla vitae himenaeos aenean facilisis. Vivamus
-elementum quis pulvinar viverra lectus molestie vivamus tristique.
+To use the console, you can enter commands to interact with the database.
+For example, `create User` will create a new user and print out its ID so
+that you can keep track of it. `show User` will show its details. Type
+`help` or `?` for a list of commands. Type `help` or `?` followed by a command
+name to see what the command does. type `exit`, `quit`, or send EOF signal
+(usually ctrl+d) to exit the console. Below are some example usages and a list
+of every command and what it does.
 
 ### Examples
 ```
