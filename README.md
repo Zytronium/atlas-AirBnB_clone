@@ -16,9 +16,6 @@ pip install vlc
 ```bash
 pip install python-vlc
 ```
-```bash
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && sudo python get-pip.py
-```
 Installing vlc is not required to run it, and you can continue without sound.
 Run with the additional program argument "-i" or "--ignore-warnings" to ignore
 the warning printed on startup when vlc is not installed.
