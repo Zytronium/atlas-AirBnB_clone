@@ -5,10 +5,17 @@ from models.base_model import BaseModel
 
 class User(BaseModel):
     """inherites from BaseModel"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # Chepe helped sort this out
         """initialize the instance"""
         super().__init__(**kwargs)
-        self.email = ""
-        self.password = ""
-        self.first_name = ""
-        self.last_name = ""
+        if kwargs:
+            self.email = kwargs.get("email")
+            self.password = kwargs.get("password")
+            self.first_name = kwargs.get("first_name")
+            self.last_name = kwargs.get("last_name")
+        else:
+            super().__init__(*args)
+            self.email = ""
+            self.password = ""
+            self.first_name = ""
+            self.last_name = ""
