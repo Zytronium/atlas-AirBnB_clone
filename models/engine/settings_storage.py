@@ -18,8 +18,6 @@ class SettingsStorage:
         """add a new setting to the dictionary"""
         SettingsStorage.__objects[name] = default_value
 
-    # --------- everything below is unchanged from copied template ---------
-
     def save(self):
         """save the settings to the file"""
         try:
